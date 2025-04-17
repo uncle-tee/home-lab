@@ -81,8 +81,7 @@ fabric.properties
 # Chart dependencies
 **/charts/*.tgz
 # Chart lock files
-**/charts/Chart.lock
-**/**/charts/Chart.lock
+**/Chart.lock
 # .idea files
 .idea/
 # .DS_Store files
