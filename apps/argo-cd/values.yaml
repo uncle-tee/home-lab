@@ -3,11 +3,8 @@ argo-cd:
     enabled: false
   notifications:
     enabled: false
-  applicationSet:
-    enabled: false
   server:
     extraArgs:
       - --insecure
     service:
       enabled: true
-      type: NodePort

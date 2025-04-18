@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: argo-cd
+            namespace: argo-cd
+  template:
+    metadata:
+      name: '{{.name}}'
+    spec:
+      project: "default"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ default "apps" .namespace }}'
+      source:
+        path: "/apps/{{.name}}"
+        repoURL: https://github.com/uncle-tee/home-lab
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - RespectIgnoreDifferences=true
