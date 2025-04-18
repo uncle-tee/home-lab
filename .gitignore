@@ -80,8 +80,6 @@ fabric.properties
 ### Helm template
 # Chart dependencies
 **/charts/*.tgz
-# Chart lock files
-**/Chart.lock
 # .idea files
 .idea/
 # .DS_Store files
