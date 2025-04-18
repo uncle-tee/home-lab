@@ -4,13 +4,20 @@ metadata:
   name: app-of-apps
   namespace: argo-cd
 spec:
+  destination:
+    namespace: argo-cd
+    server: https://kubernetes.default.svc
+  source:
+    path: gitops/
+    repoURL: https://github.com/uncle-tee/home-lab
+    helm:
+      valueFiles:
+        - values.yaml
+    targetRevision: HEAD
   project: default
   directory:
     recurse: true
-  source:
-    repoURL: https://github.com/uncle-tee/home-lab
-    path: gitops/
-    targetRevision: HEAD
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
