@@ -8,7 +8,8 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
-        elements: []
+        elements:
+          - name: hello-world
   template:
     metadata:
       name: '{{.name}}'
