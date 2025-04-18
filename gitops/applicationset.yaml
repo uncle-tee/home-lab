@@ -11,6 +11,8 @@ spec:
         elements:
           - name: hello-world
             namespace: apps
+          - name: argo-cd
+            namespace: argo-cd
   template:
     metadata:
       name: '{{.name}}'
