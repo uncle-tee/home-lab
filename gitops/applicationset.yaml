@@ -10,6 +10,7 @@ spec:
     - list:
         elements:
           - name: hello-world
+            namespace: apps
   template:
     metadata:
       name: '{{.name}}'
@@ -17,7 +18,7 @@ spec:
       project: "default"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ .namespace | default "apps" }}"
+        namespace: "{{ .namespace }}"
       source:
         path: "/apps/{{.name}}/"
         repoURL: https://github.com/uncle-tee/home-lab
