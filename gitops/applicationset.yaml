@@ -8,9 +8,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
-        elements:
-          - name: argo-cd
-            namespace: argo-cd
+        elements: []
   template:
     metadata:
       name: '{{.name}}'
