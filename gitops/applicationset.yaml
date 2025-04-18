@@ -20,7 +20,7 @@ spec:
         server: https://kubernetes.default.svc
         namespace: "{{ .namespace }}"
       source:
-        path: "/apps/{{.name}}"
+        path: "apps/{{.name}}"
         repoURL: https://github.com/uncle-tee/home-lab
         targetRevision: HEAD
       syncPolicy:
