@@ -8,7 +8,7 @@ spec:
     namespace: argo-cd
     server: https://kubernetes.default.svc
   source:
-    path: gitops/applicationset.yaml
+    path: gitops
     repoURL: https://github.com/uncle-tee/home-lab
     targetRevision: HEAD
   project: default
