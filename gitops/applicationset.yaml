@@ -13,6 +13,8 @@ spec:
             namespace: argo-cd
           - name: metallb
             namespace: metallb-system
+          - name: hello-world
+            namespace: apps
   template:
     metadata:
       name: '{{.name}}'
