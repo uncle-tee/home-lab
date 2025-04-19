@@ -11,6 +11,8 @@ spec:
         elements:
           - name: argo-cd
             namespace: argo-cd
+          - name: metallb
+            namespace: metallb-system
   template:
     metadata:
       name: '{{.name}}'
