@@ -1,0 +1,9 @@
+apiVersion: v2
+name: metallb
+description: Metal LB to handle Load Balancing for the Cluster
+version: 0.1.0
+dependencies:
+  - name: metallb
+    repository: https://metallb.github.io/metallb
+    version: 0.14.9
+
