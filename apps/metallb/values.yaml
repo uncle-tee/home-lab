@@ -1,4 +1,6 @@
 metallb:
   namespace: metallb-system
+  speaker:
+    ignoreExcludeLB: true
   ipPool:
     - 192.168.8.231-192.168.8.240
