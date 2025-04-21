@@ -1,5 +1,8 @@
+
+
 {{- if .Values.helloworld.ingress.enabled -}}
 {{- $fullName := include "helloworld.fullname" . -}}
+{{- $templateNodeName := include "helloworld.fullname" . -}}
 {{- $svcPort := .Values.helloworld.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
@@ -16,6 +19,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  ingressClassName: {{ .Values.helloworld.ingress.ingressClassName | quote }}
   {{- if .Values.helloworld.ingress.tls }}
   tls:
     {{- range  $tls := .Values.helloworld.ingress.tls }}
@@ -36,7 +40,7 @@ spec:
             pathType: {{ default "Prefix" }}
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ $templateNodeName }}
                 port:
                   number: {{ $svcPort }}
           {{- end }}
