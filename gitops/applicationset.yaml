@@ -15,6 +15,10 @@ spec:
             namespace: metallb-system
           - name: hello-world
             namespace: apps
+          - name: traefik
+            namespace: traefik-system
+          - name: cert-manager
+            namespace: cert-manager-system
   template:
     metadata:
       name: '{{.name}}'
