@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: app-of-apps
-  namespace: argo-cd
+  namespace: argo-cd-system
 spec:
   destination:
     namespace: argo-cd
