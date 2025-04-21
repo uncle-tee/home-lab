@@ -1,0 +1,10 @@
+apiVersion: v2
+name: cloud-native-operator
+description: This is used to Provide a cloud native operator, that will be used to deploy database operator
+type: application
+version: 0.1.0
+dependencies:
+  - name: cloudnative-pg
+    version: '0.3.0'
+    repository: https://cloudnative-pg.github.io/charts
+

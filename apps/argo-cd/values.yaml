@@ -1,4 +1,6 @@
 argo-cd:
+  redis:
+    enabled: false
   dex:
     enabled: false
   notifications:
