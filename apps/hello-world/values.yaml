@@ -6,7 +6,7 @@ helloworld:
     ingressClassName: traefik
     annotations:
 #      cert-manager.io/cluster-issuer: letsencrypt-staging
-      kubernetes.io/tls-acme: "true"
+#      kubernetes.io/tls-acme: "true"
     hosts:
       - host: hello-world.dyekan.com
         paths:
