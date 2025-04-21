@@ -1,0 +1,44 @@
+{{- if .Values.helloworld.ingress.enabled -}}
+{{- $fullName := include "helloworld.fullname" . -}}
+{{- $svcPort := .Values.helloworld.service.port -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "helloworld.labels" . | nindent 4 }}
+  {{- with .Values.helloworld.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.helloworld.ingress.tls }}
+  tls:
+    {{- range  $tls := .Values.helloworld.ingress.tls }}
+    - hosts:
+        {{- range $tls.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ $tls.secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range $hosts := .Values.helloworld.ingress.hosts }}
+    - host: {{ $hosts.host | quote }}
+      http:
+        paths:
+          {{- range $paths := $hosts.paths }}
+          - path: {{ $paths.path }}
+            pathType: {{ default "Prefix" }}
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          {{- end }}
+    {{- end }}
+  {{- end }}
