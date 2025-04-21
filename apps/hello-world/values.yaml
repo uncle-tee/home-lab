@@ -11,7 +11,7 @@ helloworld:
       - host: hello-world.dyekan.com
         paths:
           - path: /
-    tls:
-      - secretName: dyekan.com.tls
-        hosts:
-          - hello-world.dyekan.com
+#    tls:
+#      - secretName: dyekan.com.tls
+#        hosts:
+#          - hello-world.dyekan.com
