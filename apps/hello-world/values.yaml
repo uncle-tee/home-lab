@@ -8,8 +8,6 @@ helloworld:
       kubernetes.io/tls-acme: "true"
     hosts:
       - host: hello-world.dyekan.com
-        paths:
-          - /
     tls:
       - secretName: dyekan.com.tls
         hosts:
