@@ -13,4 +13,4 @@ helloworld:
     tls:
       - secretName: dyekan.com.tls
         hosts:
-         - host: hello-world.dyekan.com
+          - hello-world.dyekan.com
