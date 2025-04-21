@@ -9,8 +9,8 @@ spec:
   generators:
     - list:
         elements:
-          - name: argo-cd
-            namespace: argo-cd
+#          - name: argo-cd
+#            namespace: argo-cd-system
           - name: metallb
             namespace: metallb-system
           - name: hello-world
