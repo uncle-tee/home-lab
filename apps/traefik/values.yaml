@@ -1,0 +1,5 @@
+traefik:
+  service:
+    type: LoadBalancer
+    externalIPs:
+      - 192.168.8.240

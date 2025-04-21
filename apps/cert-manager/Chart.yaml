@@ -1,0 +1,10 @@
+apiVersion: v2
+name: cert-manager
+description: A chat for the certificate manager, used to issue certificates.
+type: application
+version: 0.1.0
+dependencies:
+  - name: cert-manager
+    version: '1.17.0 '
+    repository: https://charts.jetstack.io
+

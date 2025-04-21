@@ -1,6 +1,6 @@
 metallb:
   namespace: metallb-system
   speaker:
-    ignoreExcludeLB: true
+    ignoreExcludeLB: true # Ignore the exclude-lb annotation on the node this infra is still running on a single node cluster hence, all services are running on the control plane node
   ipPool:
     - 192.168.8.231-192.168.8.240
