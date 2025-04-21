@@ -5,4 +5,4 @@ version: 0.1.0
 dependencies:
   - name: helloworld
     version:  0.2.1
-    repository: https://crowdsecurity.github.io/helm-charts
+    repository: "file://../helloworld/chart"
