@@ -1,4 +1,16 @@
 helloworld:
   replicaCount: 1
-  service:
-    type: LoadBalancer
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: hello-world.dyekan.com
+        paths:
+          - /
+    tls:
+      - secretName: dyekan.com.tls
+        hosts:
+          - hello-world.dyekan.com
