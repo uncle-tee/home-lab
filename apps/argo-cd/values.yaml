@@ -8,3 +8,7 @@ argo-cd:
       - --insecure
     service:
       enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hostname: argocd.dyekan.com
