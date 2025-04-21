@@ -11,4 +11,4 @@ argo-cd:
     ingress:
       enabled: true
       ingressClassName: traefik
-      hostname: argocd.dyekan.com
+      hostname: argo-cd.dyekan.com
