@@ -1,8 +1,6 @@
 helloworld:
   fullnameOverride: "helloworld"
   replicaCount: 1
-  service:
-    type: LoadBalancer
   ingress:
     enabled: false
     ingressClassName: traefik
