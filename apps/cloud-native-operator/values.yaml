@@ -1,2 +1,5 @@
 cloudnative-pg:
   fullnameOverride: "cloudnative-pg-operator"
+  crds:
+    install: true
+    keep: false
