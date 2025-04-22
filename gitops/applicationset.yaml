@@ -17,8 +17,8 @@ spec:
 #            namespace: apps-system
           - name: metallb
             namespace: apps-system
-          - name: traefik
-            namespace: apps-system
+#          - name: traefik
+#            namespace: apps-system
 
   template:
     metadata:
