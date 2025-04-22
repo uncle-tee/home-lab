@@ -1,5 +1,5 @@
 metallb:
-  namespace: metallb-system
+  namespace: apps-system
   speaker:
     ignoreExcludeLB: true # Ignore the exclude-lb annotation on the node this infra is still running on a single node cluster hence, all services are running on the control plane node
   ipPool:
