@@ -1,12 +1,15 @@
 helloworld:
   fullnameOverride: "helloworld"
   replicaCount: 1
+  service:
+    type: LoadBalancer
   ingress:
-    enabled: true
+    enabled: false
     ingressClassName: traefik
     annotations:
 #      cert-manager.io/cluster-issuer: letsencrypt-staging
 #      kubernetes.io/tls-acme: "true"
+
     hosts:
       - host: hello-world.dyekan.com
         paths:
