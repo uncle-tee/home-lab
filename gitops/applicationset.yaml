@@ -11,14 +11,15 @@ spec:
         elements:
           - name: argocd
             namespace: argocd-system
-          - name: metallb
-            namespace: metallb-system
-          - name: hello-world
-            namespace: apps
-          - name: traefik
-            namespace: traefik-system
           - name: cert-manager
-            namespace: cert-manager-system
+            namespace: apps-system
+          - name: cloud-native-operator
+            namespace: apps-system
+          - name: metallb
+            namespace: apps-system
+          - name: traefik
+            namespace: apps-system
+
   template:
     metadata:
       name: '{{.name}}'

@@ -1,1 +1,2 @@
 cloudnative-pg:
+  fullnameOverride: "cloudnative-pg-operator"
