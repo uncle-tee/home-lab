@@ -2,7 +2,7 @@ helloworld:
   fullnameOverride: "helloworld"
   replicaCount: 1
   ingress:
-    enabled: false
+    enabled: true
     ingressClassName: traefik
     annotations:
 #      cert-manager.io/cluster-issuer: letsencrypt-staging
