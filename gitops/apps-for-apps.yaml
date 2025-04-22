@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: app-of-apps
-  namespace: argo-cd-system
+  namespace: argocd-system
 spec:
   destination:
-    namespace: argo-cd
+    namespace: argocd-system
     server: https://kubernetes.default.svc
   source:
     path: gitops
     repoURL: https://github.com/uncle-tee/home-lab
     targetRevision: HEAD
+    directory:
+      recurse: true
   project: default
-  directory:
-    recurse: true
   syncPolicy:
     automated:
       prune: true

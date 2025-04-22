@@ -1,4 +1,4 @@
-argo-cd:
+argocd:
   fullnameOverride: "argocd"
   crds:
     install: true
@@ -15,4 +15,4 @@ argo-cd:
     ingress:
       enabled: true
       ingressClassName: traefik
-      hostname: argo-cd.dyekan.com
+      hostname: argocd.dyekan.com

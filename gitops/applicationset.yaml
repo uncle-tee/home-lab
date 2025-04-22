@@ -2,15 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: homelab-apps
-  namespace: argo-cd
+  namespace: argocd-system
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
         elements:
-          - name: argo-cd
-            namespace: argo-cd-system
+          - name: argocd
+            namespace: argocd-system
           - name: metallb
             namespace: metallb-system
           - name: hello-world
