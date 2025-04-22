@@ -1,5 +1,8 @@
 argocd:
   fullnameOverride: "argocd"
+  configs:
+    params:
+      server.insecure: true
   crds:
     install: true
     keep: false
@@ -8,8 +11,8 @@ argocd:
   notifications:
     enabled: false
   server:
-    extraArgs:
-      - --insecure
+#    extraArgs:
+#      - --insecure
     service:
       enabled: true
     ingress:
