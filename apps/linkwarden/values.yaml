@@ -4,6 +4,8 @@ bookmark:
     enabled: false
   linkwarden:
     domain: bookmark.dyekan.com
+    database:
+      existingSecret: linkwarden
     nextAuthSecret:
       existingSecret:
         name: linkwarden
@@ -16,11 +18,9 @@ bookmark:
 #      s3:
 #        bucketName: linkwarden   Consider using MinIO for S3 storage
 #        region: us-east-1
-    database:
-      existingSecret: linkwarden
 
 database:
-  fullnameOverride: linkwardendb
+  fullnameOverride: linkwardendatabase
   cluster:
     instances: 1
     storage:
