@@ -11,6 +11,7 @@ bookmark:
     data:
       filesystem:
         pvc:
+          storageClass: linkwarden-db-storage-class
           size: 10Gi
 #      s3:
 #        bucketName: linkwarden   Consider using MinIO for S3 storage
@@ -23,7 +24,8 @@ database:
   cluster:
     instances: 1
     storage:
-      size: 2Gi
+      size: 10Gi
+      storageClass: linkwarden-db-storage-class
     imageCatalogRef:
       major: 17
     initdb:
