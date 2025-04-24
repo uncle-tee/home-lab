@@ -19,6 +19,8 @@ spec:
             namespace: apps-system
           - name: traefik
             namespace: traefik-system
+          - name: linkwarden
+            namespace: apps
 
   template:
     metadata:
@@ -39,4 +41,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - RespectIgnoreDifferences=true
-          - ServerSideApply=true
+          - ServerSideApply=true # This is used because of Cloud Native Operator as it was throwing errors in the deployment in ArgoCd when deploying the CRDs https://github.com/cloudnative-pg/charts/issues/325
