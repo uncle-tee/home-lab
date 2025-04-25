@@ -7,20 +7,21 @@ bookmark:
     database:
       existingSecret: linkwarden
     nextAuthSecret:
+      value: encryptionKeyMec
       existingSecret:
         name: linkwarden
         key: encryptionKey
     data:
       filesystem:
         pvc:
-          storageClass: linkwarden-db-storage-class
+          storageClass: linkwarden-storage-class
           size: 10Gi
 #      s3:
 #        bucketName: linkwarden   Consider using MinIO for S3 storage
 #        region: us-east-1
 
 database:
-  fullnameOverride: linkwardendatabase
+  fullnameOverride: linkwarden-db
   cluster:
     instances: 1
     storage:
