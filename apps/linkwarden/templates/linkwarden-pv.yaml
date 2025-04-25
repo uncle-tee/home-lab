@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
   storageClassName: linkwarden-storage-class
   local:
-    path: /mnt/drive
+    path: /mnt/drive/core
   nodeAffinity:
     required:
       nodeSelectorTerms:
