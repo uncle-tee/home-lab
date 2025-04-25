@@ -4,13 +4,13 @@ metadata:
   name: linkwarden-db-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 15Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce #Pods that will be using this are on the same node.
   persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
   storageClassName: linkwarden-db-storage-class
-  local:
+  hostPath:
     path: /mnt/drive/db
   nodeAffinity:
     required:
