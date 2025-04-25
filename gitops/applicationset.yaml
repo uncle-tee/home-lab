@@ -19,8 +19,8 @@ spec:
             namespace: apps-system
           - name: traefik
             namespace: traefik-system
-          - name: linkwarden
-            namespace: linkwarden-apps
+#          - name: linkwarden
+#            namespace: linkwarden-apps
 
   template:
     metadata:
