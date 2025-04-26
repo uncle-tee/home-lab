@@ -1,0 +1,40 @@
+kube-prometheus:
+  fullnameOverride: kube-prometheus
+  prometheus:
+    prometheusSpec:
+      scrapeInterval: 15s
+      retention: 4d
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            storageClassName: prometheus-storage-class
+            resources:
+              requests:
+                storage: 10Gi
+  grafana:
+    deploymentStrategy:
+        type: Recreate
+    serviceMonitor:
+      interval: 5s
+    admin:
+      existingSecret: grafana-admin
+      userKey: "admin-user"
+      passwordKey: "admin-word"
+    resources:
+        requests:
+            cpu: 50m
+            memory: 225Mi
+        limits:
+            cpu: 1000m
+            memory: 512Mi
+    persistence:
+        storageClassName: prometheus-storage-class
+        enabled: true
+        accessModes:
+            - ReadWriteOnce
+        size: 10Gi
+    extraVolumes:
+
+
+

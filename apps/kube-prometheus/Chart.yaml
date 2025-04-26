@@ -1,0 +1,9 @@
+apiVersion: v2
+name: kube-prometheus
+description:  Visualize and monitor the cluster using prometheus and grafana
+version: 0.1.0
+dependencies:
+  - name: kube-prometheus-stack
+    alias: kube-prometheus
+    version: 70.8.0
+    repository: https://prometheus-community.github.io/helm-charts

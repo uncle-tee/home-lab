@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce #Pods that will be using this are on the same node.
+  persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
+  storageClassName: prometheus-storage-class
+  hostPath:
+    path: /mnt/lv-90/prometheus-pv
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - dlabs-worker-1
