@@ -1,0 +1,8 @@
+apiVersion: v2
+name: metrics-server
+description:  Metrics server for Kubernetes, this is used to collect basic metrics from the cluster, Ideally it is used by the kube api to gather metrics(K top node), it is also used by the kube autoscaler to scale the cluster based on the metrics. This should not be confused with the kube-prometheus stack, which is a full monitoring solution for Kubernetes.
+version: 0.1.0
+dependencies:
+  - name: metrics-server
+    version: 3.12.2
+    repository: https://kubernetes-sigs.github.io/metrics-server

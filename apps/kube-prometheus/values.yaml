@@ -1,8 +1,5 @@
 kube-prometheus:
   fullnameOverride: kube-prometheus
-  kube-state-metrics:
-    extraArgs:
-      - --kubelet-insecure-tls
   prometheus:
     prometheusSpec:
       scrapeInterval: 15s
