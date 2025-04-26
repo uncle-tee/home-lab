@@ -9,16 +9,16 @@ spec:
   generators:
     - list:
         elements:
-          - name: argocd
-            namespace: argocd-system
-          - name: cert-manager
-            namespace: apps-system
-          - name: cloud-native-operator
-            namespace: apps-system
-          - name: metallb
-            namespace: apps-system
-          - name: traefik
-            namespace: traefik-system
+#          - name: argocd
+#            namespace: argocd-system
+#          - name: cert-manager
+#            namespace: apps-system
+#          - name: cloud-native-operator
+#            namespace: apps-system
+#          - name: metallb
+#            namespace: apps-system
+#          - name: traefik
+#            namespace: traefik-system
 #          - name: linkwarden
 #            namespace: linkwarden-apps
 
