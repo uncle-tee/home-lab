@@ -24,13 +24,6 @@ database:
   fullnameOverride: linkwarden-db
   cluster:
     instances: 1
-    resources:
-     limits:
-       cpu: 0.6
-       memory: "120Mi"
-     requests:
-       cpu: 0.5
-       memory: "120Mi"
     storage:
       size: 10Gi
       storageClass: linkwarden-db-storage-class

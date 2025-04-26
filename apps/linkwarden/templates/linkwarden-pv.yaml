@@ -4,7 +4,7 @@ metadata:
   name: linkwarden-pv
 spec:
   capacity:
-    storage: 25Gi
+    storage: 10Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce #Pods that will be using this are on the same node.
@@ -19,4 +19,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - dlabsmaster
+                - dlabs-worker-1  #This will be ported to Longhorn in the future.
