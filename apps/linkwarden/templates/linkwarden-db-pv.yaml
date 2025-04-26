@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
   storageClassName: linkwarden-db-storage-class
   hostPath:
-    path: /mnt/drive/db
+    path: /mnt/lv-90/linkwarden-db-pv
   nodeAffinity:
     required:
       nodeSelectorTerms:
