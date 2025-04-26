@@ -19,6 +19,8 @@ spec:
             namespace: monitoring-system
           - name: metallb
             namespace: apps-system
+          - name: metrics-server
+            namespace: monitoring-system
           - name: linkwarden
             namespace: linkwarden-apps
           - name: traefik
