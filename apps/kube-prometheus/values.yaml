@@ -18,9 +18,9 @@ kube-prometheus:
     serviceMonitor:
       interval: 5s
     admin:
-      existingSecret: grafana-admin
-      userKey: "admin-user"
-      passwordKey: "admin-word"
+      existingSecret: grafana-admin-credentials
+      userKey: admin-user
+      passwordKey: admin-password
     resources:
         requests:
             cpu: 50m
@@ -29,7 +29,7 @@ kube-prometheus:
             cpu: 1000m
             memory: 512Mi
     persistence:
-        storageClassName: prometheus-storage-class
+        storageClassName: grafana-storage-class
         enabled: true
         accessModes:
             - ReadWriteOnce
