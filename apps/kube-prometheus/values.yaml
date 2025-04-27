@@ -1,5 +1,8 @@
 kube-prometheus:
   fullnameOverride: kube-prometheus
+  alertmanager:
+    enabled: false
+
   prometheus:
     prometheusSpec:
       scrapeInterval: 15s
@@ -12,6 +15,7 @@ kube-prometheus:
             resources:
               requests:
                 storage: 10Gi
+
   grafana:
     deploymentStrategy:
         type: Recreate
@@ -29,11 +33,62 @@ kube-prometheus:
             cpu: 1000m
             memory: 512Mi
     persistence:
-        storageClassName: grafana-storage-class
         enabled: true
+        storageClassName: grafana-storage-class
         accessModes:
             - ReadWriteOnce
         size: 10Gi
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          allowUiUpdates: false
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+
+    dashboards:
+        default:
+          cluster-metrics-overview:
+            gnetId: 15661
+            revision: 2
+            datasource: Prometheus
+          cluster-overview:
+            gnetId: 15757
+            revision: 1
+            datasource: Prometheus
+          pod-metrics:
+            gnetId: 15760
+            revision: 1
+            datasource: Prometheus
+
+    datasources:
+        datasources.yaml:
+            apiVersion: 1
+            datasources:
+            - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://kube-prometheus-prometheus.monitoring-system:9090
+            isDefault: tru
+
+  defaultRules:
+    rules:
+      windows: false
+  kubeEtcd:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+
+
+
 
 
 
