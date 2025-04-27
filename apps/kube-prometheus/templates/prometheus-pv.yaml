@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce #Pods that will be using this are on the same node.
   persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
   storageClassName: prometheus-storage-class
-  hostPath:
+  local:
     path: /mnt/lv-90/prometheus-pv
   nodeAffinity:
     required:

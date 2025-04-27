@@ -34,7 +34,6 @@ kube-prometheus:
         accessModes:
             - ReadWriteOnce
         size: 10Gi
-    extraVolumes:
 
 
 
