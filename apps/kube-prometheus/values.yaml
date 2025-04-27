@@ -56,17 +56,13 @@ kube-prometheus:
         default:
           cluster-metrics-overview:
             gnetId: 15661
-            revision: 2
             datasource: Prometheus
           cluster-overview:
             gnetId: 15757
-            revision: 1
             datasource: Prometheus
           pod-metrics:
             gnetId: 15760
-            revision: 1
             datasource: Prometheus
-
     datasources:
         datasources.yaml:
             apiVersion: 1
