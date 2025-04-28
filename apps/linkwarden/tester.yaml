@@ -1,0 +1,54 @@
+controllers:
+  main:
+    strategy: Recreate
+    defaultContainerOptions:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    containers:
+      main:
+        image:
+          repository: ghcr.io/linkwarden/linkwarden
+          tag: 2.10.0
+          pullPolicy: IfNotPresent
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: linkwarden
+                key: uri
+          - name: NEXTAUTH_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: linkwarden
+                key: encryptionKey
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 80
+        targetPort: 3000
+ingress:
+  main:
+    hosts:
+      - host: bookmark.dyekan.com
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    storageClass: linkwarden-storage-class
+    advancedMounts:
+      main:
+        main:
+          - path: /data/data
+            readOnly: false
