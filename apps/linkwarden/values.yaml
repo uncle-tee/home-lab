@@ -2,7 +2,8 @@ bookmark:
   controllers:
     main:
       strategy: Recreate
-      defaultContainerOptions:
+      pod:
+        automountServiceAccountToken: true
         securityContext:
           runAsUser: 1000
           fsGroup: 1000
