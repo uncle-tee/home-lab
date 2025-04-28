@@ -3,10 +3,10 @@ name: linkwarden
 description:  Bookmark manager to collect, organize and archive web pages
 version: 0.1.0
 dependencies:
-  - name: linkwarden
+  - name: app-template
     alias: bookmark
-    version: 0.3.3
-    repository: https://fmjstudios.github.io/helm
+    version: 3.7.3
+    repository: 'https://bjw-s.github.io/helm-charts'
   - name: cluster
     alias: database
     version: 0.3.0
