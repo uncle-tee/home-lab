@@ -12,7 +12,7 @@ bookmark:
         main:
           image:
             repository: ghcr.io/linkwarden/linkwarden
-            tag: 2.10.0
+            tag: v2.10.0
             pullPolicy: IfNotPresent
           env:
             - name: DATABASE_URL
