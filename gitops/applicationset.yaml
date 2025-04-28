@@ -21,8 +21,8 @@ spec:
             namespace: apps-system
           - name: metrics-server
             namespace: monitoring-system
-          - name: linkwarden
-            namespace: linkwarden-apps
+#          - name: linkwarden
+#            namespace: linkwarden-apps
           - name: traefik
             namespace: traefik-system
 
