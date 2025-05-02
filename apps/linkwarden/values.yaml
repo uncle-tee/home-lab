@@ -35,7 +35,7 @@ bookmark:
   ingress:
     main:
       hosts:
-        - host: bookmark.dyekan.com
+        - host: bookmark.oluwatobia.de
           paths:
             - path: /
               pathType: Prefix

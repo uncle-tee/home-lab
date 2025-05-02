@@ -1,6 +1,0 @@
-dependencies:
-- name: helloworld
-  repository: https://crowdsecurity.github.io/helm-charts
-  version: 0.2.1
-digest: sha256:5a30487cdfad9f0a244cd0e7ce99b15aa5d8b8a0caf225472a5764ad5a1001e0
-generated: "2025-04-21T08:51:58.010145+01:00"
