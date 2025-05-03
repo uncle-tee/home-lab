@@ -5,8 +5,8 @@ bookmark:
       pod:
         automountServiceAccountToken: true
         securityContext:
-          runAsUser: 1000
-          fsGroup: 1000
+          runAsUser: 0
+          fsGroup: 0 # Set to 0 to allow root user access
           fsGroupChangePolicy: OnRootMismatch
       containers:
         main:
