@@ -52,7 +52,7 @@ bookmark:
       advancedMounts:
         main:
           main:
-            - path: /data/data
+            - path: /data
               readOnly: false
 
 database:
