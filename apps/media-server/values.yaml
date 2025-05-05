@@ -31,6 +31,7 @@ media-server:
           probes:
             liveness:
               enabled: true
+              custom: true
               spec:
                 httpGet:
                   path: /
@@ -39,6 +40,7 @@ media-server:
                 periodSeconds: 10
             readiness:
               enabled: true
+              custom: true
               spec:
                 httpGet:
                   path: /
