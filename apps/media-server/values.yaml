@@ -38,18 +38,18 @@ media-server:
           gluetun:
            -  path: /glutun/wireguard/wg0.conf
               readOnly: true
-    gluetun-volume:
-      enabled: true
-      type: persistentVolumeClaim
-      accessMode: ReadWriteOnce
-      size: 50Gi
-      nameOverride: media-server-pvc
-      storageClass: media-server-storage-class
-      advancedMounts:
-        gluetun:
-          gluetun:
-            - path: /glutun
-              readOnly: false
+#    gluetun-volume:
+#      enabled: true
+#      type: persistentVolumeClaim
+#      accessMode: ReadWriteOnce
+#      size: 50Gi
+#      nameOverride: media-server-pvc
+#      storageClass: media-server-storage-class
+#      advancedMounts:
+#        gluetun:
+#          gluetun:
+#            - path: /glutun
+#              readOnly: false
 
 
 
