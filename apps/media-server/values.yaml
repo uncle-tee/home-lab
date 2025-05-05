@@ -36,8 +36,8 @@ media-server:
       advancedMounts:
         gluetun:
           gluetun:
-            path: /glutun/wireguard/wg0.conf
-            readOnly: true
+           -  path: /glutun/wireguard/wg0.conf
+              readOnly: true
     gluetun-volume:
       enabled: true
       type: persistentVolumeClaim
