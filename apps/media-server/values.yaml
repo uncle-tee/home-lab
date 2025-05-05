@@ -5,8 +5,8 @@ media-server:
       pod:
         automountServiceAccountToken: true
         securityContext:
-          runAsUser: 0
-          fsGroup: 1000 #
+          runAsUser: 0 #Gluetun Needs to Modify the Network Stack
+          fsGroup: 0
           fsGroupChangePolicy: OnRootMismatch
 
       containers:
