@@ -34,27 +34,18 @@ media-server:
         gluetun:
           gluetun:
             - path: /dev/net/tun
-    glutun-wireguard-config:
+    gluetun-volume:
       enabled: true
-      type: secret
-      name: gluetun-wireguard-config
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 50Gi
+      nameOverride: media-server-pvc
+      storageClass: media-server-storage-class
       advancedMounts:
         gluetun:
           gluetun:
-           -  path: /gluetun/wireguard
-              readOnly: true
-#    gluetun-volume:
-#      enabled: true
-#      type: persistentVolumeClaim
-#      accessMode: ReadWriteOnce
-#      size: 50Gi
-#      nameOverride: media-server-pvc
-#      storageClass: media-server-storage-class
-#      advancedMounts:
-#        gluetun:
-#          gluetun:
-#            - path: /glutun
-#              readOnly: false
+            - path: /glutun
+              readOnly: false
 
 
 
