@@ -28,6 +28,22 @@ media-server:
           envFrom:
             - secretRef:
                 name: gluetun-wireguard-config
+          probes:
+            liveness:
+              enabled: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 9999
+                initialDelaySeconds: 10
+                periodSeconds: 10
+            readiness:
+              httpGet:
+                path: /
+                port: 9999
+              initialDelaySeconds: 10
+              periodSeconds: 10
+
 
   persistence:
     gluetun-tunnel-device:
