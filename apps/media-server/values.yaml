@@ -1,0 +1,70 @@
+media-server:
+  controllers:
+    gluetun:
+      strategy: Recreate
+      pod:
+        automountServiceAccountToken: true
+      containers:
+        gluetun:
+          image:
+            repository: ghcr.io/qdm12/gluetun
+            tag: latest
+            pullPolicy: IfNotPresent
+          capabilities:
+            add:
+              - NET_ADMIN
+          env:
+            - name: VPN_SERVICE_PROVIDER
+              value: private internet access
+            - name: OPENVPN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: media-server
+                  key: pia-username
+            - name: OPENVPN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: media-server
+                  key: pia-password
+            - name: SERVER_REGION
+              value: "de_berlin"
+            - name: VPN_TYPE
+              value: wireguard
+            - name: VPN_INTERFACE
+              value: wg0
+            - name: WIREGUARD_ADDRESS
+              value: 10.6.254.150/32
+            - name: TZ
+              value: 'Europe/Berlin'
+  persistence:
+    gluetun-tunnel-device:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: "CharDevice"
+      advancedMounts:
+        gluetun:
+          gluetun:
+            - path: /dev/net/tun
+    gluetun-volume:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 50Gi
+      storageClass: media-server-storage-class
+      advancedMounts:
+        gluetun:
+          gluetun:
+            - path: /glutun
+              readOnly: false
+
+
+
+
+
+
+
+
+
+
+

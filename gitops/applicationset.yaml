@@ -17,6 +17,8 @@ spec:
             namespace: apps-system
           - name: kube-prometheus
             namespace: monitoring-system
+          - name: media-server
+            namespace: media-server-apps
           - name: metallb
             namespace: apps-system
           - name: metrics-server

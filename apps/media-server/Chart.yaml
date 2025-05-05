@@ -1,0 +1,9 @@
+apiVersion: v2
+name: Media Server
+description:  The is the Media Automation server
+version: 0.1.0
+dependencies:
+  - name: app-template
+    alias: media-server
+    version: 3.7.3
+    repository: 'https://bjw-s-labs.github.io/helm-charts'
