@@ -43,6 +43,7 @@ media-server:
       type: persistentVolumeClaim
       accessMode: ReadWriteOnce
       size: 50Gi
+      nameOverride: media-server-pvc
       storageClass: media-server-storage-class
       advancedMounts:
         gluetun:
