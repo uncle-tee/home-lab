@@ -50,6 +50,7 @@ media-server:
         gluetun:
           gluetun:
             - path: /gluetun
+              subPath: /config/gluetun
               readOnly: false
 
 
