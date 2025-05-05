@@ -21,9 +21,9 @@ media-server:
                 - NET_ADMIN
           env:
             VPN_SERVICE_PROVIDER: "private internet access"
-            SERVER_REGIONS: 'Netherlands'
+            SERVER_REGIONS: 'NL Netherlands Streaming Optimized'
             TZ: "Europe/Berlin"
-            SERVER_NAMES: "amsterdam441"
+            SERVER_NAMES: "amsterdam404"
             SERVER_HOSTNAMES: "nl-amsterdam.privacy.network"
           envFrom:
             - secretRef:
