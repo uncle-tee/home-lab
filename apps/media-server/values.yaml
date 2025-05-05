@@ -49,7 +49,7 @@ media-server:
       advancedMounts:
         gluetun:
           gluetun:
-            - path: /glutun
+            - path: /gluetun
               readOnly: false
 
 
