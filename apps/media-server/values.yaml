@@ -4,6 +4,7 @@ media-server:
       strategy: Recreate
       pod:
         automountServiceAccountToken: true
+        restartPolicy: Always
       containers:
         gluetun:
           image:
@@ -13,7 +14,6 @@ media-server:
           capabilities:
             add:
               - NET_ADMIN
-          restartPolicy: Always
           env:
             VPN_SERVICE_PROVIDER: custom
             VPN_TYPE: wireguard
