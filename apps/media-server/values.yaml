@@ -15,10 +15,15 @@ media-server:
               add:
                 - NET_ADMIN
           env:
-            VPN_SERVICE_PROVIDER: custom
-            VPN_TYPE: wireguard
+            VPN_SERVICE_PROVIDER: "private internet access"
+            SERVER_REGIONS: 'Netherlands'
             TZ: "Europe/Berlin"
-            VPN_INTERFACE: wg0
+            SERVER_NAMES: "amsterdam441"
+            SERVER_HOSTNAMES: "nl-amsterdam.privacy.network"
+          envFrom:
+            - secretRef:
+                name: gluetun-wireguard-config
+
   persistence:
     gluetun-tunnel-device:
       enabled: true
