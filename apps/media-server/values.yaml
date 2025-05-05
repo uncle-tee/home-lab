@@ -4,16 +4,16 @@ media-server:
       strategy: Recreate
       pod:
         automountServiceAccountToken: true
-        restartPolicy: Always
       containers:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
             tag: latest
             pullPolicy: IfNotPresent
-          capabilities:
-            add:
-              - NET_ADMIN
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
           env:
             VPN_SERVICE_PROVIDER: custom
             VPN_TYPE: wireguard
