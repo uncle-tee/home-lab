@@ -4,6 +4,11 @@ media-server:
       strategy: Recreate
       pod:
         automountServiceAccountToken: true
+        securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+          fsGroupChangePolicy: OnRootMismatch
+
       containers:
         gluetun:
           image:
