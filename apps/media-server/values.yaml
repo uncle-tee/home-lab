@@ -24,7 +24,7 @@ media-server:
             SERVER_REGIONS: 'NL Netherlands Streaming Optimized'
             TZ: "Europe/Berlin"
             SERVER_NAMES: "amsterdam404"
-            SERVER_HOSTNAMES: "nl-amsterdam.privacy.network"
+            SERVER_HOSTNAMES: "nl-netherlands-so.privacy.network"
           envFrom:
             - secretRef:
                 name: gluetun-wireguard-config
