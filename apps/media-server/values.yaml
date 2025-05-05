@@ -13,29 +13,12 @@ media-server:
           capabilities:
             add:
               - NET_ADMIN
+          restartPolicy: Always
           env:
-            - name: VPN_SERVICE_PROVIDER
-              value: private internet access
-            - name: OPENVPN_USER
-              valueFrom:
-                secretKeyRef:
-                  name: media-server
-                  key: pia-username
-            - name: OPENVPN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: media-server
-                  key: pia-password
-            - name: SERVER_REGION
-              value: "de_berlin"
-            - name: VPN_TYPE
-              value: wireguard
-            - name: VPN_INTERFACE
-              value: wg0
-            - name: WIREGUARD_ADDRESS
-              value: 10.6.254.150/32
-            - name: TZ
-              value: 'Europe/Berlin'
+            VPN_SERVICE_PROVIDER: custom
+            VPN_TYPE: wireguard
+            TZ: "Europe/Berlin"
+            VPN_INTERFACE: wg0
   persistence:
     gluetun-tunnel-device:
       enabled: true
@@ -46,6 +29,15 @@ media-server:
         gluetun:
           gluetun:
             - path: /dev/net/tun
+    glutun-wireguard-config:
+      enabled: true
+      type: secret
+      name: gluetun-wireguard-config
+      advancedMounts:
+        gluetun:
+          gluetun:
+            path: /glutun/wireguard/wg0.conf
+            readOnly: true
     gluetun-volume:
       enabled: true
       type: persistentVolumeClaim
