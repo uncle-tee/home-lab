@@ -38,11 +38,13 @@ media-server:
                 initialDelaySeconds: 10
                 periodSeconds: 10
             readiness:
-              httpGet:
-                path: /
-                port: 9999
-              initialDelaySeconds: 10
-              periodSeconds: 10
+              enabled: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 9999
+                initialDelaySeconds: 10
+                periodSeconds: 10
 
 
   persistence:
