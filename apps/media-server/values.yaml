@@ -28,6 +28,7 @@ media-server:
 
         gluetun:
           dependsOn: nzbget
+          restartPolicy: Always
           image:
             repository: qmcgaw/gluetun
             tag: v3.40.0
