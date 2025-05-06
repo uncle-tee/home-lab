@@ -12,7 +12,7 @@ media-server:
       containers:
         nzbget:
           image:
-            repository: lscr.io/linuxserver/nzbget
+            repository: nzbgetcom/nzbget
             tag: latest
             pullPolicy: IfNotPresent
           env:
