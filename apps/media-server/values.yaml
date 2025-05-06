@@ -1,6 +1,6 @@
 media-server:
   controllers:
-    gluetun:
+    vpn-tunnel:
       strategy: Recreate
       pod:
         automountServiceAccountToken: true
@@ -10,7 +10,24 @@ media-server:
           fsGroupChangePolicy: OnRootMismatch
 
       containers:
+        nzbget:
+          image:
+            repository: lscr.io/linuxserver/nzbget
+            tag: latest
+            pullPolicy: IfNotPresent
+          env:
+            PUID: 1000
+            PGID: 1000
+            TZ: "Europe/Berlin"
+          envFrom:
+            - secretRef:
+                 name: media-server
+          ports:
+            - name: nzbget
+              containerPort: 6789
+
         gluetun:
+          dependsOn: nzbget
           image:
             repository: ghcr.io/qdm12/gluetun
             tag: latest
@@ -20,6 +37,7 @@ media-server:
               add:
                 - NET_ADMIN
           env:
+            FIREWALL_VPN_INPUT_PORTS: 6789
             VPN_SERVICE_PROVIDER: "private internet access"
             SERVER_REGIONS: 'NL Netherlands Streaming Optimized'
             TZ: "Europe/Berlin"
@@ -27,9 +45,13 @@ media-server:
             SERVER_HOSTNAMES: "nl-netherlands-so.privacy.network"
           envFrom:
             - secretRef:
-                name: gluetun-wireguard-config
-
-
+                name: media-server
+  service:
+    vpn-tunnel:
+      controller: vpn-tunnel
+      ports:
+        nzbget:
+          port: 6789
   persistence:
     gluetun-tunnel-device:
       enabled: true
@@ -37,7 +59,7 @@ media-server:
       hostPath: /dev/net/tun
       hostPathType: "CharDevice"
       advancedMounts:
-        gluetun:
+        vpn-tunnel:
           gluetun:
             - path: /dev/net/tun
     gluetun-volume:
@@ -48,10 +70,17 @@ media-server:
       nameOverride: media-server-pvc
       storageClass: media-server-storage-class
       advancedMounts:
-        gluetun:
+        vpn-tunnel:
           gluetun:
             - path: /gluetun
               subPath: config/gluetun
+              readOnly: false
+          nzbget:
+            - path: /config
+              subPath: config/nzbget
+              readOnly: false
+            - path: /downloads
+              subPath: downloads
               readOnly: false
 
 
