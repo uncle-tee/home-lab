@@ -9,7 +9,7 @@ media-server:
           fsGroup: 0
           fsGroupChangePolicy: OnRootMismatch
 
-      containers:
+      initContainers:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
@@ -28,25 +28,6 @@ media-server:
           envFrom:
             - secretRef:
                 name: gluetun-wireguard-config
-          probes:
-            liveness:
-              enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /
-                  port: 9999
-                initialDelaySeconds: 10
-                periodSeconds: 10
-            readiness:
-              enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /
-                  port: 9999
-                initialDelaySeconds: 10
-                periodSeconds: 10
 
 
   persistence:
