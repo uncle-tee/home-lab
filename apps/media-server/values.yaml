@@ -3,6 +3,7 @@ media-server:
     vpn-tunnel:
       strategy: Recreate
       pod:
+        restartPolicy: Always
         automountServiceAccountToken: true
         securityContext:
           runAsUser: 0 #Gluetun Needs to Modify the Network Stack
@@ -28,7 +29,6 @@ media-server:
 
         gluetun:
           dependsOn: nzbget
-          restartPolicy: Always
           image:
             repository: qmcgaw/gluetun
             tag: v3.40.0
