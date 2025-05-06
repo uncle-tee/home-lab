@@ -38,7 +38,7 @@ media-server:
               add:
                 - NET_ADMIN
           env:
-            DNS_ADDRESS: "10.0.0.241,10.0.0.242,10.0.0.243,10.0.0.244,10.0.0.241"
+            DNS_ADDRESS: "10.0.0.241"
             FIREWALL_VPN_INPUT_PORTS: 6789
             VPN_SERVICE_PROVIDER: "private internet access"
             SERVER_REGIONS: 'DE Berlin'
