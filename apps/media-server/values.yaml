@@ -26,25 +26,25 @@ media-server:
             - name: nzbget
               containerPort: 6789
 
-#        gluetun:
-#          dependsOn: nzbget
-#          image:
-#            repository: ghcr.io/qdm12/gluetun
-#            tag: latest
-#            pullPolicy: IfNotPresent
-#          securityContext:
-#            capabilities:
-#              add:
-#                - NET_ADMIN
-#          env:
-#            FIREWALL_VPN_INPUT_PORTS: 6789
-#            VPN_SERVICE_PROVIDER: "private internet access"
-#            SERVER_REGIONS: 'DE Berlin'
-#            TZ: "Europe/Berlin"
-#            SERVER_HOSTNAMES: "de-berlin.privacy.network"
-#          envFrom:
-#            - secretRef:
-#                name: media-server
+        gluetun:
+          dependsOn: nzbget
+          image:
+            repository: ghcr.io/qdm12/gluetun
+            tag: latest
+            pullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          env:
+            FIREWALL_VPN_INPUT_PORTS: 6789
+            VPN_SERVICE_PROVIDER: "private internet access"
+            SERVER_REGIONS: 'DE Berlin'
+            TZ: "Europe/Berlin"
+            SERVER_HOSTNAMES: "de-berlin.privacy.network"
+          envFrom:
+            - secretRef:
+                name: media-server
   service:
     vpn-tunnel:
       controller: vpn-tunnel
@@ -52,15 +52,15 @@ media-server:
         nzbget:
           port: 6789
   persistence:
-#    gluetun-tunnel-device:
-#      enabled: true
-#      type: hostPath
-#      hostPath: /dev/net/tun
-#      hostPathType: "CharDevice"
-#      advancedMounts:
-#        vpn-tunnel:
-#          gluetun:
-#            - path: /dev/net/tun
+    gluetun-tunnel-device:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: "CharDevice"
+      advancedMounts:
+        vpn-tunnel:
+          gluetun:
+            - path: /dev/net/tun
     gluetun-volume:
       enabled: true
       type: persistentVolumeClaim
@@ -70,10 +70,10 @@ media-server:
       storageClass: media-server-storage-class
       advancedMounts:
         vpn-tunnel:
-#          gluetun:
-#            - path: /gluetun
-#              subPath: config/gluetun
-#              readOnly: false
+          gluetun:
+            - path: /gluetun
+              subPath: config/gluetun
+              readOnly: false
           nzbget:
             - path: /config
               subPath: config/nzbget
