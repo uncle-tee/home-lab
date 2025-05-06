@@ -39,10 +39,9 @@ media-server:
           env:
             FIREWALL_VPN_INPUT_PORTS: 6789
             VPN_SERVICE_PROVIDER: "private internet access"
-            SERVER_REGIONS: 'NL Netherlands Streaming Optimized'
+            SERVER_REGIONS: 'DE Berlin'
             TZ: "Europe/Berlin"
-            SERVER_NAMES: "amsterdam404"
-            SERVER_HOSTNAMES: "nl-netherlands-so.privacy.network"
+            SERVER_HOSTNAMES: "de-berlin.privacy.network"
           envFrom:
             - secretRef:
                 name: media-server

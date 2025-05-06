@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph Indexers
+        A1[NZBGeek]
+        A2[DrunkenSlug]
+        A3[NinjaCentral]
+    end
+
+    subgraph Prowlarr
+        P1[Prowlarr]
+    end
+
+    subgraph Arr Stack
+        R1[Radarr]
+        S1[Sonarr]
+    end
+
+    P1 --> A1
+    P1 --> A2
+    P1 --> A3
+    R1 --> P1
+    S1 --> P1
+    P1 --> NZBGet[NZBGet]
+    NZBGet --> Downloads[(Downloaded files)]
+    Downloads --> R1
+    Downloads --> S1
