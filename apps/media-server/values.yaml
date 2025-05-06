@@ -9,7 +9,7 @@ media-server:
           fsGroup: 0
           fsGroupChangePolicy: OnRootMismatch
 
-      initContainers:
+      containers:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
