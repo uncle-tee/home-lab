@@ -38,7 +38,7 @@ media-server:
               add:
                 - NET_ADMIN
           env:
-            DOT: off
+#            DOT: off
             FIREWALL_VPN_INPUT_PORTS: 6789
             VPN_SERVICE_PROVIDER: "private internet access"
             SERVER_REGIONS: 'DE Berlin'
