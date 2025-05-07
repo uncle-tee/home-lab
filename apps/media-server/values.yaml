@@ -47,6 +47,33 @@ media-server:
           envFrom:
             - secretRef:
                 name: media-server
+    radarr:
+      nameOverride: radarr
+      strategy: Recreate
+      pod:
+          automountServiceAccountToken: true
+          securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+          fsGroupChangePolicy: OnRootMismatch
+
+      containers:
+        radarr:
+          image:
+            repository: lscr.io/linuxserver/radarr
+            tag: 5.22.4
+            pullPolicy: IfNotPresent
+          env:
+            PUID: 1000
+            PGID: 1000
+            TZ: "Europe/Berlin"
+          envFrom:
+            - secretRef:
+                name: media-server
+          ports:
+            - name: radarr
+              containerPort: 7878
+
   service:
     vpn-tunnel:
       enabled: true
@@ -55,6 +82,16 @@ media-server:
       ports:
         nzbget:
           port: 6789
+    radarr:
+      enabled: true
+      nameOverride: radarr
+      controller: radarr
+      ports:
+        radarr:
+          port: 7878
+
+
+
   persistence:
     gluetun-tunnel-device:
       enabled: true
@@ -93,6 +130,11 @@ media-server:
               readOnly: false
             - path: /data/usenet/incomplete
               subPath: usenet/incomplete
+              readOnly: false
+        radarr:
+          radarr:
+            - path: /config
+              subPath: config/radarr
               readOnly: false
 
 
