@@ -73,6 +73,32 @@ media-server:
           ports:
             - name: radarr
               containerPort: 7878
+    prowlarr:
+      nameOverride: prowlarr
+      strategy: Recreate
+      pod:
+          automountServiceAccountToken: true
+          securityContext:
+            runAsUser: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
+      containers:
+        prowlarr:
+          image:
+            repository: lscr.io/linuxserver/prowlarr
+            tag: 1.35.1
+            pullPolicy: IfNotPresent
+          env:
+            PUID: 1000
+            PGID: 1000
+            TZ: "Europe/Berlin"
+          envFrom:
+            - secretRef:
+                name: media-server
+          ports:
+            - name: prowlarr
+              containerPort: 9696
 
   service:
     vpn-tunnel:
@@ -89,6 +115,13 @@ media-server:
       ports:
         radarr:
           port: 7878
+    prowler:
+      enabled: true
+      nameOverride: prowlarr
+      controller: prowler
+      ports:
+        prowlarr:
+          port: 9696
 
 
 
@@ -136,6 +169,12 @@ media-server:
             - path: /config
               subPath: config/radarr
               readOnly: false
+        prowlarr:
+          prowlarr:
+            - path: /config
+              subPath: config/prowlarr
+              readOnly: false
+
 
 
 
