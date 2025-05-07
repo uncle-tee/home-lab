@@ -49,6 +49,8 @@ media-server:
                 name: media-server
   service:
     vpn-tunnel:
+      enabled: true
+      nameOverride: media-server-vpn-tunnel
       controller: vpn-tunnel
       ports:
         nzbget:
