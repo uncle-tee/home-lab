@@ -39,7 +39,7 @@ media-server:
                 - NET_ADMIN
           env:
             DNS_ADDRESS: "10.0.0.241" #Instead of using the K8s DNS, the VPN DNS is used, reference https://helpdesk.privateinternetaccess.com/kb/articles/using-pia-dns-in-custom-configurations
-            FIREWALL_VPN_INPUT_PORTS: 6789
+#            FIREWALL_VPN_INPUT_PORTS: 6789 For safetry this is not required, as the VPN is not exposed to the outside world
             FIREWALL_INPUT_PORTS: 6789
             VPN_SERVICE_PROVIDER: "private internet access"
             SERVER_REGIONS: 'DE Berlin'
