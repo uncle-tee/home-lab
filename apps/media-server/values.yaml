@@ -82,9 +82,21 @@ media-server:
             - path: /config
               subPath: config/nzbget
               readOnly: false
-            - path: /downloads
-              subPath: downloads
+            - path: /data/usenet
+              subPath: usenet
               readOnly: false
+            - path: /data/usenet/completed/movies
+              subPath: usenet/completed/movies
+              readOnly: false
+            - path: /data/usenet/completed/tv
+              subPath: usenet/completed/tv
+              readOnly: false
+            - path: /data/usenet/incomplete
+              subPath: usenet/incomplete
+              readOnly: false
+
+
+
 
 
 
