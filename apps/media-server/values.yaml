@@ -115,10 +115,10 @@ media-server:
       ports:
         radarr:
           port: 7878
-    prowler:
+    prowlarr:
       enabled: true
       nameOverride: prowlarr
-      controller: prowler
+      controller: prowlarr
       ports:
         prowlarr:
           port: 9696
