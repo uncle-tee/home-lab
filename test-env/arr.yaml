@@ -1,0 +1,1225 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-3.7.3/charts/library/common/values.schema.json
+app-template:
+  defaultPodOptions:
+    automountServiceAccountToken: false
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  controllers:
+    jellyfin:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        jellyfin:
+          image:
+            repository: lscr.io/linuxserver/jellyfin
+            tag: 10.10.7ubu2404-ls63@sha256:71e77db4470b44729b9ad0693bd610c43817fd5a637470529e5903735f55bd5c
+          env:
+            TZ: Europe/Paris
+          ports:
+            - name: http
+              containerPort: 8096
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+            readiness:
+              enabled: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+          securityContext:
+            privileged: true
+
+    jellyseerr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        jellyseerr:
+          image:
+            repository: fallenbagel/jellyseerr
+            tag: 2.5.2@sha256:2a611369ad1d0d501c2d051fc89b6246ff081fb4a30879fdc75642cf6a37b1a6
+          env:
+            TZ: Europe/Paris
+          ports:
+            - name: http
+              containerPort: 5055
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /api/v1/status
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /api/v1/status
+          securityContext:
+            privileged: true
+
+    jellystat:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+      containers:
+        jellystat:
+          image:
+            repository: cyfershepard/jellystat
+            tag: 1.1.6@sha256:683358900cff8d299fa93add731b2976d7c9bc49f9593f40f5351498fd488767
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            TZ: Europe/Paris
+            MINIMUM_SECONDS_TO_INCLUDE_PLAYBACK: "120"
+            POSTGRES_IP:
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-cnpg-cluster-jellystat-app"
+                  key: host
+            POSTGRES_USER:
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-cnpg-cluster-jellystat-app"
+                  key: user
+            POSTGRES_PORT:
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-cnpg-cluster-jellystat-app"
+                  key: port
+            POSTGRES_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-cnpg-cluster-jellystat-app"
+                  key: password
+            POSTGRES_DB:
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-cnpg-cluster-jellystat-app"
+                  key: dbname
+            JWT_SECRET:
+              valueFrom:
+                secretKeyRef:
+                  name: "jellystat-jwt-secret"
+                  key: password
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /auth/isconfigured
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /auth/isconfigured
+    sonarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        sonarr:
+          image:
+            repository: lscr.io/linuxserver/sonarr
+            tag: 4.0.14.2939-ls281@sha256:5581b2188f11ea6693e0dfe3f3c3198bb605b78088ec685ad579a5a308cc0d5d
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 8989
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+
+    radarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        radarr:
+          image:
+            repository: lscr.io/linuxserver/radarr
+            tag: 5.22.4.9896-ls273@sha256:3a220dd02a24cb3610441ec6811bf70846e851e05f3219ec4801a06bd0646912
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 7878
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+
+    lidarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        lidarr:
+          image:
+            repository: lscr.io/linuxserver/lidarr
+            tag: 2.11.2.4629-ls40@sha256:273641e57caa284a1439b062eea2faed965761d6b7bda78a687184080a901cc2
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 8686
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+
+    prowlarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        prowlarr:
+          image:
+            repository: lscr.io/linuxserver/prowlarr
+            tag: 1.35.1.5034-ls117@sha256:dec1e580aad36bccaeb1aba283f01a5263761905c304875a603c9a952ecfda79
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 9696
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+
+    bazarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        bazarr:
+          image:
+            repository: lscr.io/linuxserver/bazarr
+            tag: v1.5.1-ls303@sha256:034e679ae691e10841a0a5a54cd349b042f49f5403cd66211c001314056f567f
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 6767
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /ping
+
+    configarr:
+      type: cronjob
+      annotations:
+        reloader.stakater.com/auto: "true"
+      cronjob:
+        schedule: "0 * * * *"
+        successfulJobsHistory: 1
+        failedJobsHistory: 1
+      containers:
+        configarr:
+          image:
+            repository: configarr/configarr
+            tag: 1.13.5@sha256:2a1380becc621f6429a4dbd4c377b3dccbe1d52ba9cdffeb458d8fdec5e0e262
+          env:
+            TZ: Europe/Paris
+
+    flaresolverr:
+      type: deployment
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+      containers:
+        flaresolverr:
+          image:
+            repository: ghcr.io/flaresolverr/flaresolverr
+            tag: v3.3.21@sha256:f104ee51e5124d83cf3be9b37480649355d223f7d8f9e453d0d5ef06c6e3b31b
+          env:
+            TZ: Europe/Paris
+          ports:
+            - name: http
+              containerPort: 8191
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+
+    butlarr:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        butlarr:
+          image:
+            repository: trimforce/butlarr
+            tag: 1.2.2@sha256:79742266eabf6972ae5f82cadf083ddfff4c0313ace80a0593766e8d52352b38
+          env:
+            TZ: Europe/Paris
+            BUTLARR_INTERACTIVE_SETUP: "false"
+            BUTLARR_CONFIG_FILE: "/app/config.yaml"
+
+    qbittorrent:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        qbittorrent:
+          image:
+            repository: lscr.io/linuxserver/qbittorrent
+            tag: 5.1.0-r0-ls392@sha256:dc7614012548d5ab22063cb8b5c1d08e0dbdb392fe18460d4cab8e355857124f
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+            TORRENTING_PORT: 6887
+          ports:
+            - name: http
+              containerPort: 8080
+          probes:
+            liveness:
+              enabled: true
+              type: HTTP
+            readiness:
+              enabled: true
+              type: HTTP
+
+        gluetun:
+          dependsOn: qbittorrent
+          image:
+            repository: ghcr.io/qdm12/gluetun
+            tag: v3.40.0@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
+          env:
+            TZ: Europe/Paris
+            VPN_SERVICE_PROVIDER: airvpn
+            VPN_TYPE: wireguard
+            VPN_INTERFACE: wg0
+            SERVER_REGIONS: Europe
+            WIREGUARD_ADDRESSES: 10.145.193.219/32,fd7d:76ee:e68f:a993:7c10:4d59:a5d7:9537/128
+            FIREWALL_VPN_INPUT_PORTS: "6887"
+          envFrom:
+            - secretRef:
+                name: gluetun-wg-keys
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+            runAsUser: 0
+            runAsGroup: 0
+            privileged: true
+
+    filebrowser:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        filebrowser:
+          image:
+            repository: filebrowser/filebrowser
+            tag: v2.32.0@sha256:593478e3c24c5ea9f5d7478dc549965b7bc7030707291006ce8d0b6162d3454b
+          env:
+            TZ: Europe/Paris
+            PUID: 1000
+            PGID: 1000
+          ports:
+            - name: http
+              containerPort: 8080
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+            readiness:
+              enabled: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
+
+    slskd:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - "{{ .Release.Name }}"
+                topologyKey: kubernetes.io/hostname
+      containers:
+        slskd:
+          image:
+            repository: slskd/slskd
+            tag: 0.22.5@sha256:f5150c39758353c31788e8e3d6aa9f9c2910f2a46591d810fc2f4d0bac81a96a
+          env:
+            TZ: Europe/Paris
+            PUID: "1000"
+            PGID: "1000"
+            SLSKD_CONFIG: /config/slskd.yml
+          ports:
+            - name: http
+              containerPort: 5030
+            - name: slskd
+              containerPort: 39332
+          probes:
+            liveness:
+              enabled: true
+              type: HTTP
+            readiness:
+              enabled: true
+              type: HTTP
+
+        gluetun:
+          dependsOn: slskd
+          image:
+            repository: ghcr.io/qdm12/gluetun
+            tag: v3.40.0@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
+          env:
+            TZ: Europe/Paris
+            VPN_SERVICE_PROVIDER: airvpn
+            VPN_TYPE: wireguard
+            VPN_INTERFACE: wg2
+            SERVER_REGIONS: Europe
+            WIREGUARD_ADDRESSES: 10.165.132.142/32,fd7d:76ee:e68f:a993:98e4:695c:3789:4b9d/128
+            FIREWALL_VPN_INPUT_PORTS: "39332"
+          envFrom:
+            - secretRef:
+                name: gluetun-slskd-wg-keys
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+            runAsUser: 0
+            runAsGroup: 0
+            privileged: true
+
+    soularr:
+      type: deployment
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        soularr:
+          image:
+            repository: mrusse08/soularr
+            tag: latest@sha256:16885ad0d5ec25d248a640773822927d89163cc65bc9c49732140777c11558aa
+          env:
+            TZ: Europe/Paris
+
+  service:
+    jellyfin:
+      controller: jellyfin
+      type: ClusterIP
+      ports:
+        http:
+          port: 8096
+    jellyseerr:
+      controller: jellyseerr
+      type: ClusterIP
+      ports:
+        http:
+          port: 5055
+    jellystat:
+      controller: jellystat
+      type: ClusterIP
+      ports:
+        http:
+          port: 3000
+    sonarr:
+      controller: sonarr
+      type: ClusterIP
+      ports:
+        http:
+          port: 8989
+    radarr:
+      controller: radarr
+      type: ClusterIP
+      ports:
+        http:
+          port: 7878
+    lidarr:
+      controller: lidarr
+      type: ClusterIP
+      ports:
+        http:
+          port: 8686
+    prowlarr:
+      controller: prowlarr
+      type: ClusterIP
+      ports:
+        http:
+          port: 9696
+    bazarr:
+      controller: bazarr
+      type: ClusterIP
+      ports:
+        http:
+          port: 6767
+    flaresolverr:
+      controller: flaresolverr
+      type: ClusterIP
+      ports:
+        http:
+          port: 8191
+    qbittorrent:
+      controller: qbittorrent
+      type: ClusterIP
+      ports:
+        http:
+          port: 8080
+    filebrowser:
+      controller: filebrowser
+      type: ClusterIP
+      ports:
+        http:
+          port: 8080
+    slskd:
+      controller: slskd
+      type: ClusterIP
+      ports:
+        http:
+          port: 5030
+
+  ingress:
+    jellyfin:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+        nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+      className: "nginx"
+      hosts:
+        - host: &host jf.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: jellyfin
+                port: http
+      tls:
+        - secretName: jellyfin-tls
+          hosts:
+            - *host
+
+    jellyseerr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host js.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: jellyseerr
+                port: http
+      tls:
+        - secretName: jellyseerr-tls
+          hosts:
+            - *host
+
+    jellystat:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host jstat.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: jellystat
+                port: http
+      tls:
+        - secretName: jellystat-tls
+          hosts:
+            - *host
+
+    sonarr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host son.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: sonarr
+                port: http
+      tls:
+        - secretName: sonarr-tls
+          hosts:
+            - *host
+
+    radarr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host rad.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: radarr
+                port: http
+      tls:
+        - secretName: radarr-tls
+          hosts:
+            - *host
+
+    lidarr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host lid.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: lidarr
+                port: http
+      tls:
+        - secretName: lidarr-tls
+          hosts:
+            - *host
+
+    prowlarr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host prow.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: prowlarr
+                port: http
+      tls:
+        - secretName: prowlarr-tls
+          hosts:
+            - *host
+
+    bazarr:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host baz.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: bazarr
+                port: http
+      tls:
+        - secretName: bazarr-tls
+          hosts:
+            - *host
+
+    qbittorrent:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+      className: "nginx"
+      hosts:
+        - host: &host qb.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: qbittorrent
+                port: http
+      tls:
+        - secretName: qbittorrent-tls
+          hosts:
+            - *host
+
+    filebrowser:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+      className: "nginx"
+      hosts:
+        - host: &host fb.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: filebrowser
+                port: http
+      tls:
+        - secretName: filebrowser-tls
+          hosts:
+            - *host
+
+    slskd:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: home.terence.cloud
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+      className: "nginx"
+      hosts:
+        - host: &host slskd.terence.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: slskd
+                port: http
+      tls:
+        - secretName: slskd-tls
+          hosts:
+            - *host
+
+  persistence:
+    data:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1000Gi
+      advancedMounts:
+        jellyfin:
+          jellyfin:
+            - path: /data/media
+              subPath: media
+        sonarr:
+          sonarr:
+            - path: /data
+        radarr:
+          radarr:
+            - path: /data
+        lidarr:
+          lidarr:
+            - path: /data
+        bazarr:
+          bazarr:
+            - path: /data
+        qbittorrent:
+          qbittorrent:
+            - path: /data/download
+              subPath: download
+        filebrowser:
+          filebrowser:
+            - path: /srv
+        slskd:
+          slskd:
+            - path: /music
+              subPath: media/music
+            - path: /download
+              subPath: download/slskd
+        soularr:
+          soularr:
+            - path: /data
+              subPath: media/music
+            - path: /downloads
+              subPath: download/slskd/complete
+
+    jellyfin-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 30Gi
+      advancedMounts:
+        jellyfin:
+          jellyfin:
+            - path: /config
+
+    jellyfin-hwa:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/dri/renderD128
+      hostPathType: "CharDevice"
+      advancedMounts:
+        jellyfin:
+          jellyfin:
+            - path: /dev/dri/renderD128
+
+    jellyseerr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        jellyseerr:
+          jellyseerr:
+            - path: /app/config
+
+    jellystat-backup-data:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        jellystat:
+          jellystat:
+            - path: /app/backend/backup-data
+
+    sonarr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        sonarr:
+          sonarr:
+            - path: /config
+
+    radarr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        radarr:
+          radarr:
+            - path: /config
+
+    lidarr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 2Gi
+      advancedMounts:
+        lidarr:
+          lidarr:
+            - path: /config
+
+    butlarr-data:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      advancedMounts:
+        butlarr:
+          butlarr:
+            - path: /app/data
+
+    butlarr-config-secret:
+      enabled: true
+      type: secret
+      name: butlarr-config
+      defaultMode: 0400
+      items:
+        - key: config.yaml
+          path: config.yaml
+      advancedMounts:
+        butlarr:
+          butlarr:
+            - path: /app/config.yaml
+              subPath: config.yaml
+
+    qbittorrent-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        qbittorrent:
+          qbittorrent:
+            - path: /config
+
+    gluetun-device:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: "CharDevice"
+      advancedMounts:
+        qbittorrent:
+          gluetun:
+            - path: /dev/net/tun
+
+    prowlarr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        prowlarr:
+          prowlarr:
+            - path: /config
+
+    bazarr-config:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      advancedMounts:
+        bazarr:
+          bazarr:
+            - path: /config
+
+    configarr-cache:
+      enabled: true
+      type: emptyDir
+      advancedMounts:
+        configarr:
+          configarr:
+            - path: /app/repos
+              subPath: configarr-repos
+
+    configarr-config:
+      type: configMap
+      name: arr-stack-configarr-config
+      advancedMounts:
+        configarr:
+          configarr:
+            - path: /app/config/config.yml
+              subPath: config.yml
+
+    configarr-secrets:
+      enabled: true
+      type: secret
+      name: configarr-secrets
+      items:
+        - key: secrets.yml
+          path: secrets.yml
+      advancedMounts:
+        configarr:
+          configarr:
+            - path: /app/config/secrets.yml
+              subPath: secrets.yml
+
+    filebrowser-db:
+      enabled: true
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      advancedMounts:
+        filebrowser:
+          filebrowser:
+            - path: /database
+
+    filebrowser-settings:
+      type: configMap
+      name: arr-stack-filebrowser-settings
+      advancedMounts:
+        filebrowser:
+          filebrowser:
+            - path: /.filebrowser.json
+              subPath: .filebrowser.json
+
+    slskd-config:
+      type: secret
+      name: slskd-config
+      advancedMounts:
+        slskd:
+          slskd:
+            - path: /config
+              readOnly: true
+
+    slskd-data:
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      size: 500Mi
+      advancedMounts:
+        slskd:
+          slskd:
+            - path: /app
+
+    gluetun-slskd-device:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: "CharDevice"
+      advancedMounts:
+        slskd:
+          gluetun:
+            - path: /dev/net/tun
+
+    soularr-config:
+      type: secret
+      name: soularr-config
+      advancedMounts:
+        soularr:
+          soularr:
+            - path: /data/config.ini
+              subPath: config.ini
+
+  configMaps:
+    configarr-config:
+      data:
+        config.yml: |
+          trashGuideUrl: https://github.com/TRaSH-Guides/Guides
+          recyclarrConfigUrl: https://github.com/recyclarr/config-templates
+
+          sonarr:
+            series:
+              base_url: http://arr-stack-sonarr:8989
+              api_key: !secret SONARR_API_KEY
+
+              quality_definition:
+                type: series
+
+              include:
+                - template: sonarr-quality-definition-series
+                - template: sonarr-v4-quality-profile-web-1080p
+                - template: sonarr-v4-custom-formats-web-1080p
+                - template: sonarr-v4-quality-profile-bluray-web-1080p-french-vostfr
+                - template: sonarr-v4-custom-formats-bluray-web-1080p-french-vostfr
+
+              custom_formats: []
+
+          radarr:
+            movies:
+              base_url: http://arr-stack-radarr:7878
+              api_key: !secret RADARR_API_KEY
+
+              include:
+                - template: radarr-quality-definition-movie
+                - template: radarr-quality-profile-hd-bluray-web
+                - template: radarr-custom-formats-hd-bluray-web
+                - template: radarr-quality-profile-remux-web-1080p
+                - template: radarr-custom-formats-remux-web-1080p
+                - template: radarr-quality-profile-hd-bluray-web-french-vostfr
+                - template: radarr-custom-formats-hd-bluray-web-french-vostfr
+                - template: radarr-quality-profile-hd-remux-web-french-vostfr
+                - template: radarr-custom-formats-hd-remux-web-french-vostfr
+
+              custom_formats: []
+
+    filebrowser-settings:
+      data:
+        .filebrowser.json: |
+          {
+            "port": 8080,
+            "baseURL": "",
+            "address": "0.0.0.0",
+            "log": "stdout",
+            "database": "/database/filebrowser.db",
+            "root": "/srv"
+          }
+
+cnpg-cluster-jellystat:
+  type: postgresql
+  mode: standalone
+  version:
+    postgresql: "17"
+  cluster:
+    instances: 1
+    imageCatalogRef:
+      kind: ClusterImageCatalog
+      name: postgresql
+    storage:
+      size: 5Gi
+    roles:
+      - name: jellystat
+        connectionLimit: -1
+        ensure: present
+        createdb: true
+        inherit: true
+        login: true
+    resources: { }
+    primaryUpdateMethod: switchover
+    primaryUpdateStrategy: unsupervised
+    logLevel: "info"
+    monitoring:
+      enabled: true
+      podMonitor:
+        enabled: true
+    postgresql: { }
+    initdb:
+      database: jellystat
