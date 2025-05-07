@@ -1,7 +1,7 @@
 media-server:
   controllers:
     vpn-tunnel:
-      name: vpn-tunnel-media-downloader
+      nameOverride: media-server-vpn-tunnel
       strategy: Recreate
       pod:
         automountServiceAccountToken: true
