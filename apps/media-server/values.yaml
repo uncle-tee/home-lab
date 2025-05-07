@@ -50,7 +50,7 @@ media-server:
   service:
     vpn-tunnel:
       enabled: true
-      fullnameOverride: media-server-vpn-tunnel
+      nameOverride: vpn-tunnel
       controller: vpn-tunnel
       ports:
         nzbget:
