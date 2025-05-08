@@ -54,8 +54,8 @@ media-server:
       pod:
           automountServiceAccountToken: true
           securityContext:
-            runAsUser: 1000
-            fsGroup: 1000
+            runAsUser: 0
+            fsGroup: 0
             fsGroupChangePolicy: OnRootMismatch
 
       containers:
@@ -80,8 +80,8 @@ media-server:
       pod:
           automountServiceAccountToken: true
           securityContext:
-            runAsUser: 1000
-            fsGroup: 1000
+            runAsUser: 0
+            fsGroup: 0
             fsGroupChangePolicy: OnRootMismatch
 
       containers:
