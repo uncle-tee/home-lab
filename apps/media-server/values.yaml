@@ -175,6 +175,9 @@ media-server:
             - path: /data/media/tv
               subPath: media/tv
               readOnly: false
+            - path: /data/usenet/completed/movies
+              subPath: usenet/completed/movies
+              readOnly: false
         prowlarr:
           prowlarr:
             - path: /config
