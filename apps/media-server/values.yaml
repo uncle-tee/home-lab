@@ -128,6 +128,15 @@ media-server:
 
 
   persistence:
+    airvpn-wireguard-conf:
+      enabled: true
+      type:  secret
+      name: gluetun-wireguard-conf
+      advancedMounts:
+        vpn-tunnel:
+          gluetun:
+            - path: /gluetun/wireguard
+              readOnly: true
     gluetun-tunnel-device:
       enabled: true
       type: hostPath
