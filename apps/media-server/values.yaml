@@ -39,6 +39,8 @@ media-server:
                 - NET_ADMIN
           env:
             VPN_SERVICE_PROVIDER: airvpn
+            DNS_ADDRESS: "10.4.0.1" #Instead of using the K8s DNS, the VPN DNS is used, reference https://helpdesk.privateinternetaccess.com/kb/articles/using-pia-dns-in-custom-configurations
+            FIREWALL_VPN_INPUT_PORTS: 6789
             VPN_TYPE: wireguard
             VPN_INTERFACE: wg0
             SERVER_REGIONS: Europe
