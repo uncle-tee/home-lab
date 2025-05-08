@@ -38,20 +38,16 @@ media-server:
               add:
                 - NET_ADMIN
           env:
-            VPN_SERVICE_PROVIDER: airvpn
-            DNS_ADDRESS: "10.4.0.1" #Instead of using the K8s DNS, the VPN DNS is used, reference https://helpdesk.privateinternetaccess.com/kb/articles/using-pia-dns-in-custom-configurations
-            FIREWALL_VPN_INPUT_PORTS: 6789
-            VPN_TYPE: wireguard
-            VPN_INTERFACE: wg0
-            SERVER_REGIONS: Europe
-            SERVER_COUNTRIES: "Germany"
-#            WIREGUARD_MTU: 1280
-#            WIREGUARD_ADDRESSES: 10.128.0.1/32,fd7d:76ee:e68f:a993::1/128
-
+            DNS_ADDRESS: "10.0.0.241" #Instead of using the K8s DNS, the VPN DNS is used, reference https://helpdesk.privateinternetaccess.com/kb/articles/using-pia-dns-in-custom-configurations
+#            FIREWALL_VPN_INPUT_PORTS: 6789 For safetry this is not required, as the VPN is not exposed to the outside world
+            FIREWALL_INPUT_PORTS: 6789 #This is the port that is use to expose the NZBGet service to other pods
+            VPN_SERVICE_PROVIDER: "private internet access"
+            SERVER_REGIONS: 'DE Berlin'
             TZ: "Europe/Berlin"
-#          envFrom:
-#            - secretRef:
-#                name: media-server
+            SERVER_HOSTNAMES: "de-berlin.privacy.network"
+          envFrom:
+            - secretRef:
+                name: media-server
     radarr:
       nameOverride: radarr
       strategy: Recreate
@@ -131,15 +127,6 @@ media-server:
 
 
   persistence:
-    airvpn-wireguard-conf:
-      enabled: true
-      type:  secret
-      name: airvpn-wireguard
-      advancedMounts:
-        vpn-tunnel:
-          gluetun:
-            - path: /gluetun/wireguard
-              readOnly: true
     gluetun-tunnel-device:
       enabled: true
       type: hostPath
