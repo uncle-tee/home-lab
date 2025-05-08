@@ -65,8 +65,8 @@ media-server:
             tag: 5.22.4
             pullPolicy: IfNotPresent
           env:
-            PUID: 1000
-            PGID: 1000
+            PUID: 0
+            PGID: 0
             TZ: "Europe/Berlin"
           envFrom:
             - secretRef:

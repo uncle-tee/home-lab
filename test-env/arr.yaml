@@ -555,10 +555,17 @@ app-template:
           probes:
             liveness:
               enabled: true
-              type: HTTP
+              custom: true
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
             readiness:
               enabled: true
-              type: HTTP
+              spec:
+                httpGet:
+                  port: http
+                  path: /health
 
         gluetun:
           dependsOn: slskd
@@ -585,16 +592,23 @@ app-template:
             privileged: true
 
     soularr:
-      type: deployment
+      type: cronjob
+      cronjob:
+        schedule: "*/5 * * * *"
+        successfulJobsHistory: 1
+        failedJobsHistory: 1
+        concurrencyPolicy: Forbid
       annotations:
         reloader.stakater.com/auto: "true"
       containers:
         soularr:
           image:
             repository: mrusse08/soularr
-            tag: latest@sha256:16885ad0d5ec25d248a640773822927d89163cc65bc9c49732140777c11558aa
+            tag: latest@sha256:5186cd4bdaf6a1595f86d90fe99a61bb95b2baaf02998d00cbac32e52f1121b3
           env:
             TZ: Europe/Paris
+          command: python
+          args: ["-u", "/app/soularr.py"]
 
   service:
     jellyfin:
@@ -860,7 +874,6 @@ app-template:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
         external-dns.alpha.kubernetes.io/target: home.terence.cloud
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
       className: "nginx"
       hosts:
         - host: &host slskd.terence.cloud
@@ -1212,7 +1225,7 @@ cnpg-cluster-jellystat:
         createdb: true
         inherit: true
         login: true
-    resources: { }
+    resources: {}
     primaryUpdateMethod: switchover
     primaryUpdateStrategy: unsupervised
     logLevel: "info"
@@ -1220,6 +1233,6 @@ cnpg-cluster-jellystat:
       enabled: true
       podMonitor:
         enabled: true
-    postgresql: { }
+    postgresql: {}
     initdb:
       database: jellystat
