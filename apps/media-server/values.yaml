@@ -176,7 +176,10 @@ media-server:
               subPath: media/tv
               readOnly: false
             - path: /data/usenet/completed/movies
-              subPath: usenet/completed/movies
+              subPath: usenet
+              readOnly: false
+            - path: /data/usenet/incomplete
+              subPath: usenet/incomplete
               readOnly: false
         prowlarr:
           prowlarr:
