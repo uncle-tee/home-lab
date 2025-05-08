@@ -41,7 +41,7 @@ media-server:
             VPN_SERVICE_PROVIDER: airvpn
             VPN_TYPE: wireguard
             VPN_INTERFACE: wg0
-            SERVER_REGIONS: Germany
+            SERVER_REGIONS: Europe
             WIREGUARD_ADDRESSES: 10.128.0.1/32,fd7d:76ee:e68f:a993::1/128
             SERVER_COUNTRIES: "Germany"
             TZ: "Europe/Berlin"
