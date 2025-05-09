@@ -161,6 +161,8 @@ media-server:
 
   ingress:
     jellyfin:
+      enabled: true
+      nameOverride: jellyfin
       hosts:
         - host: media.oluwatobia.de
           paths:
