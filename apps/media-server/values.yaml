@@ -88,7 +88,7 @@ media-server:
         jellyfin:
           image:
             repository: jellyfin/jellyfin
-            tag: 2025050505
+            tag: "2025050505"
             pullPolicy: IfNotPresent
           env:
             PUID: 0
