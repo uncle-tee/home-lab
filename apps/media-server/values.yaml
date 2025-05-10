@@ -186,11 +186,11 @@ media-server:
     gpu-accelerator:
       enabled: true
       type: hostPath
-      hostPath: /dev/dri
+      hostPath: /dev/dri/renderD128
       advancedMounts:
         jellyfin:
           jellyfin:
-            - path: /dev/dri
+            - path: /dev/dri/renderD128
 
 
 
