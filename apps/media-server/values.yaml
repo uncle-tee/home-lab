@@ -187,7 +187,6 @@ media-server:
       enabled: true
       type: hostPath
       hostPath: /dev/dri
-      nameOverride: gpu-accelerator
       advancedMounts:
         jellyfin:
           jellyfin:
