@@ -183,6 +183,18 @@ media-server:
         vpn-tunnel:
           gluetun:
             - path: /dev/net/tun
+    gpu-accelerator:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/dri
+      nameOverride: gpu-accelerator
+      advancedMounts:
+        jellyfin:
+          jellyfin:
+            - path: /dev/dri
+
+
+
     gluetun-volume:
       enabled: true
       type: persistentVolumeClaim
