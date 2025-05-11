@@ -118,8 +118,8 @@ media-server:
               env:
                   TZ: "Europe/Berlin"
               ports:
-                  - name: jellyseer
-                    containerPort: 5055
+                - name: jellyseer
+                  containerPort: 5055
     prowlarr:
       nameOverride: prowlarr
       strategy: Recreate
