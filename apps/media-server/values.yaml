@@ -117,6 +117,7 @@ media-server:
                   pullPolicy: IfNotPresent
               env:
                   TZ: "Europe/Berlin"
+                  LOG_LEVEL: debug
               ports:
                 - name: jellyseer
                   containerPort: 5055
