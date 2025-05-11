@@ -100,7 +100,26 @@ media-server:
           ports:
             - name: jellyfin
               containerPort: 8096
-
+    jellyseer:
+        nameOverride: jellyseer
+        strategy: Recreate
+        pod:
+            automountServiceAccountToken: true
+            securityContext:
+                runAsUser: 0
+                fsGroup: 0
+                fsGroupChangePolicy: OnRootMismatch
+        containers:
+            jellyseer:
+            image:
+                repository: ghcr.io/fallenbagel/jellyseerr
+                tag: latest
+                pullPolicy: IfNotPresent
+            env:
+                TZ: "Europe/Berlin"
+            ports:
+                - name: jellyseer
+                  containerPort: 5055
     prowlarr:
       nameOverride: prowlarr
       strategy: Recreate
@@ -157,7 +176,13 @@ media-server:
       ports:
         prowlarr:
           port: 9696
-
+    jellyseer:
+        enabled: true
+        nameOverride: jellyseer
+        controller: jellyseer
+        ports:
+          jellyseer:
+              port: 5055
 
   ingress:
     jellyfin:
@@ -171,7 +196,17 @@ media-server:
               service:
                 identifier: jellyfin
                 port: http
-
+    jellyseer:
+      enabled: true
+      nameOverride: jellyseer
+      hosts:
+        - host: media-request.oluwatobia.de
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: jellyseer
+                port: jellyseer
 
   persistence:
     gluetun-tunnel-device:
@@ -191,9 +226,6 @@ media-server:
         jellyfin:
           jellyfin:
             - path: /dev/dri/renderD128
-
-
-
     gluetun-volume:
       enabled: true
       type: persistentVolumeClaim
@@ -230,6 +262,11 @@ media-server:
               subPath: config/jellyfin/cache
             - path: /media
               subPath: media
+              readOnly: false
+        jellyseer:
+          jellyseer:
+            - path: /app/config
+              subPath: config/jellyseer
               readOnly: false
         prowlarr:
           prowlarr:
