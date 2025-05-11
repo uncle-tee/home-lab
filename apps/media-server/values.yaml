@@ -115,11 +115,11 @@ media-server:
                   repository: ghcr.io/fallenbagel/jellyseerr
                   tag: latest
                   pullPolicy: IfNotPresent
-              env:
-                  TZ: "Europe/Berlin"
-              ports:
-                - name: jellyseer
-                  containerPort: 5055
+#              env:
+#                  TZ: "Europe/Berlin"
+#              ports:
+#                - name: jellyseer
+#                  containerPort: 5055
     prowlarr:
       nameOverride: prowlarr
       strategy: Recreate
