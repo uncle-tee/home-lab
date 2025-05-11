@@ -117,9 +117,9 @@ media-server:
                   pullPolicy: IfNotPresent
               env:
                   TZ: "Europe/Berlin"
-#              ports:
-#                - name: jellyseer
-#                  containerPort: 5055
+              ports:
+                - name: jellyseer
+                  containerPort: 5055
     prowlarr:
       nameOverride: prowlarr
       strategy: Recreate
