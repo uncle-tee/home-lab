@@ -158,7 +158,7 @@ media-server:
                 fsGroupChangePolicy: OnRootMismatch
 
         containers:
-            bazarr:
+          bazarr:
             image:
                 repository: ghcr.io/hotio/bazarr
                 tag: "release-1.5.2"
