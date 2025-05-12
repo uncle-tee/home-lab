@@ -213,7 +213,7 @@ media-server:
         controller: bazarr
         ports:
             http:
-                port: bazarr
+                port: 6767
 
   ingress:
     jellyfin:
