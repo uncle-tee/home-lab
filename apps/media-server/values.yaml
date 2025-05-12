@@ -164,12 +164,9 @@ media-server:
                 tag: "release-1.5.2"
                 pullPolicy: IfNotPresent
             env:
-                PUID: 0
-                PGID: 0
-                TZ: "Europe/Berlin"
-            envFrom:
-                - secretRef:
-                    name: media-server
+              PUID: 0
+              PGID: 0
+              TZ: "Europe/Berlin"
             ports:
               - name: bazarr
                 containerPort: 6767
