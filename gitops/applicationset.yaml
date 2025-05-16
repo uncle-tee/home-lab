@@ -16,13 +16,13 @@ spec:
           - name: cloud-native-operator
             namespace: apps-system
           - name: kube-prometheus
-            namespace: monitoring-system
+            namespace: observability-system
           - name: media-server
             namespace: media-server-apps
           - name: metallb
             namespace: apps-system
 #          - name: metrics-server
-#            namespace: monitoring-system
+#            namespace: observability-system
           - name: linkwarden
             namespace: linkwarden-apps
           - name: traefik
