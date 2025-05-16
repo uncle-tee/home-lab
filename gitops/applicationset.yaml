@@ -25,6 +25,8 @@ spec:
 #            namespace: monitoring-system
           - name: linkwarden
             namespace: linkwarden-apps
+          - name: pangolin
+            namespace: pangolin-apps
           - name: traefik
             namespace: traefik-system
 
