@@ -1,0 +1,9 @@
+apiVersion: v2
+name: Pangolin
+description:  Pangolin is an alternative to tail-scale, this is used as a wire guard authentication server
+version: 0.1.0
+dependencies:
+  - name: app-template
+    alias: pangolin
+    version: 3.7.3
+    repository: 'https://bjw-s-labs.github.io/helm-charts'

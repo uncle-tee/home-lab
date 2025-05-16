@@ -1,0 +1,11 @@
+pangolin:
+  controllers:
+    newt:
+      containers:
+        image:
+          repository: fosrl/newt
+          tag: latest
+          pullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: pangolin
