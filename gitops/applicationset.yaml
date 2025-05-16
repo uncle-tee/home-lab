@@ -15,7 +15,7 @@ spec:
             namespace: apps-system
           - name: cloud-native-operator
             namespace: apps-system
-          - name: kube-prometheus
+          - name: grafana-prometheus
             namespace: observability-system
           - name: media-server
             namespace: media-server-apps

@@ -1,9 +1,9 @@
 apiVersion: v2
-name: kube-prometheus
+name: grafana-prometheus
 description:  Visualize and monitor the cluster using prometheus and grafana, this should not be confused with the metrics state server, which is a basic metrics server for the cluster.
 version: 0.1.0
 dependencies:
   - name: kube-prometheus-stack
-    alias: kube-prometheus
+    alias: grafana-prometheus
     version: 72.4.0
     repository: https://prometheus-community.github.io/helm-charts

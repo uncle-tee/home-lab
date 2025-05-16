@@ -1,5 +1,5 @@
-kube-prometheus:
-  fullnameOverride: kube-prometheus
+grafana-prometheus:
+  fullnameOverride: grafana-prometheus
   alertmanager:
     enabled: false
 
@@ -70,7 +70,7 @@ kube-prometheus:
             - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://kube-prometheus-prometheus.monitoring-system:9090
+            url: http://grafana-prometheus-prometheus.monitoring-system:9090
             isDefault: tru
 
   defaultRules:
