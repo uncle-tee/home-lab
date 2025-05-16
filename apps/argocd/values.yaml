@@ -19,3 +19,27 @@ argocd:
       enabled: true
       ingressClassName: traefik
       hostname: argocd.oluwatobia.de
+
+
+fullnameOverride: "argocd"
+configs:
+  params:
+    server.insecure: true
+crds:
+  install: true
+  keep: false
+dex:
+  enabled: false
+notifications:
+  enabled: false
+server:
+  #    extraArgs:
+  #      - --insecure
+  service:
+    enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hostname: argocd.oluwatobia.de
+
+

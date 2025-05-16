@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
   storageClassName: linkwarden-db-storage-class
   local:
-    path: /mnt/lv-90/linkwarden-db-pv
+    path: /mnt/local-volume/linkwarden-db-pv
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -19,4 +19,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - dlabs-worker-1
+                - dlabs-control-plane
