@@ -8,7 +8,7 @@ dependencies:
     alias: minio-operator
     version: '7.1.1'
     repository: https://operator.min.io
-  - name: tenant
-    alias: homelab-tenant
-    version: '7.1.1'
-    repository: https://operator.min.io
+#  - name: tenant
+#    alias: homelab-tenant
+#    version: '7.1.1'
+#    repository: https://operator.min.io
