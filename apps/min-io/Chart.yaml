@@ -1,0 +1,14 @@
+apiVersion: v2
+name: MiniO
+type: application
+description: MinIO is a high-performance, S3 compatible object storage solution designed for large-scale data infrastructure.
+version: 0.1.0
+dependencies:
+  - name: operator
+    alias: minio-operator
+    version: '7.1.1'
+    repository: https://operator.min.io
+  - name: tenant
+    alias: homelab-tenant
+    version: '7.1.1'
+    repository: https://operator.min.io
