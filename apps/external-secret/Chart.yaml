@@ -1,0 +1,9 @@
+apiVersion: v2
+name: External Secrets
+type: application
+description: External Secret Operator is used to manage secrets in Kubernetes
+version: 0.1.0
+dependencies:
+  - name: external-secrets
+    version: '0.17.0'
+    repository: https://charts.external-secrets.io
