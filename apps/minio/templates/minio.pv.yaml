@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-server-pv
+spec:
+  capacity:
+    storage: 120Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce #Pods that will be using this are on the same node.
+  persistentVolumeReclaimPolicy: Retain # Retain the volume after the claim is deleted
+  storageClassName: minio-storage-class
+  local:
+    path: /mnt/local-volume/media-server
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - dlabs-control-plane  #This will be ported to Longhorn in the future.
