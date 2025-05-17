@@ -15,6 +15,8 @@ spec:
             namespace: apps-system
           - name: cloud-native-operator
             namespace: apps-system
+          - name: external-secret
+            namespace: apps-system
           - name: grafana-prometheus
             namespace: observability-system
           - name: media-server
