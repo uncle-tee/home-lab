@@ -8,6 +8,6 @@ homelab-tenant:
         size: 20Gi
     users:
       - admin-user-console
-    configuration:
+    configSecret:
       name: root-user-login
       existingSecret: "true"
