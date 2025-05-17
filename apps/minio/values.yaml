@@ -7,7 +7,7 @@ homelab-tenant:
         storageClassName: minio-storage-class
         size: 20Gi
     users:
-      - admin-user-console
+      - name: admin-user-console
     configSecret:
       name: root-user-login
       existingSecret: "true"
