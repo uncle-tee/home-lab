@@ -3,6 +3,7 @@ homelab-tenant:
     name: homelab
     pools:
       - servers: 4
+        name: "pool-0"
         volumesPerServer: 2
         storageClassName: minio-storage-class
         size: 20Gi
