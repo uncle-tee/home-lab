@@ -1,14 +1,14 @@
-homelab-tenant:
-  tenant:
-    name: homelab
-    pools:
-      - servers: 4
-        name: "pool-0"
-        volumesPerServer: 2
-        storageClassName: minio-storage-class
-        size: 20Gi
-    users:
-      - name: admin-user-console
-    configSecret:
-      name: root-user-login
-      existingSecret: true
+#homelab-tenant:
+#  tenant:
+#    name: homelab
+#    pools:
+#      - servers: 4
+#        name: "pool-0"
+#        volumesPerServer: 2
+#        storageClassName: minio-storage-class
+#        size: 20Gi
+#    users:
+#      - name: admin-user-console
+#    configSecret:
+#      name: root-user-login
+#      existingSecret: true
