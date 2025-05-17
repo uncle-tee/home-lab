@@ -2,11 +2,11 @@ homelab-tenant:
   tenant:
     name: homelab
     pools:
-      - servers: 4
+      - servers: 1 #We are using a Single Node
         name: "pool-0"
-        volumesPerServer: 2
+        volumesPerServer: 1
         storageClassName: minio-storage-class
-        size: 20Gi
+        size: 80Gi
     users:
       - name: admin-user-console
     configSecret:
