@@ -11,4 +11,4 @@ homelab-tenant:
       - name: admin-user-console
     configSecret:
       name: root-user-login
-      existingSecret: "true"
+      existingSecret: true
