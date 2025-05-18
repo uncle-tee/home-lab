@@ -243,8 +243,9 @@ media-server:
     jellyfin:
       rules:
         - matches:
-            - path: /watch
-              pathType: Prefix
+            - path:
+                type: PathPrefix
+                value: /watch
           backendRefs:
             - kind: Service
               port: 7000
