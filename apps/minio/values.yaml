@@ -5,7 +5,7 @@ homelab-tenant:
       - servers: 2
         name: "pool-0"
         volumesPerServer: 4
-        storageClassName: longhorn
+        storageClassName: longhorn-storage-class
         size: 10Gi
     users:
       - name: admin-user-console

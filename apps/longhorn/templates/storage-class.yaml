@@ -1,0 +1,20 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+  name: longhorn-storage-class
+provisioner: driver.longhorn.io
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+parameters:
+  dataEngine: v1
+  dataLocality: disabled
+  disableRevisionCounter: "true"
+  diskSelector: san-disk-1tb
+  fromBackup: ""
+  fsType: ext4
+  numberOfReplicas: "1"
+  staleReplicaTimeout: "30"
+  unmapMarkSnapChainRemoved: ignored
