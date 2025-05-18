@@ -5,6 +5,7 @@ longhorn:
     replicas: 1
   persistence:
     defaultClass: false
+    backupTargetName: ~
     reclaimPolicy: Retain
     defaultDiskSelector:
       enable: true
