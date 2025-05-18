@@ -1,0 +1,47 @@
+longhorn:
+  longhornUI:
+    replicas: 1
+  persistence:
+    defaultClass: false
+    defaultDiskSelector:
+      enable: true
+      selector: "longhorn.io/san-disk-1tb"  # The disk in the node has already been labeled and annotated with this tag
+  defaultSettings:
+    defaultDataPath: "/mnt/local-volume/longhorn-data"
+    createDefaultDiskLabeledNodes: true
+    defaultReplicaCount: 2
+    storageMinimalAvailablePercentage: 30
+    autoCleanupRecurringJobBackupSnapshot: true
+    autoCleanupSystemGeneratedSnapshot: true
+    concurrentAutomaticEngineUpgradePerNodeLimit: 3
+    orphanAutoDeletion: true
+    allowEmptyDiskSelectorVolume: false
+    allowEmptyNodeSelectorVolume: false
+
+
+#Node Label
+#kubectl label node dlabs-control-plane node.longhorn.io/create-default-disk=config
+
+#Node Annotation
+#  kubectl annotate node dlabs-control-plane \
+#  node.longhorn.io/default-disks-config='[
+#  {
+#"name": "san-disk-ssd",
+#"path": "/mnt/local-volume/longhorn-data",
+#"allowScheduling": true,
+#"tags": [
+#  "longhorn.io/san-disk-1tb"
+#]
+#},
+#  {
+#    "name": "on-node-storage",
+#    "path": "/mnt/lv-90/longhorn-data",
+#    "allowScheduling": false,
+#    "tags": [
+#      "on-node-storage",
+#      "fast"
+#    ]
+#  }
+#]'
+
+

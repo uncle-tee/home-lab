@@ -1,0 +1,9 @@
+apiVersion: v2
+name: longhorn
+description: Longhorn is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.
+version: 0.1.0
+dependencies:
+  - name: longhorn
+    repository: https://charts.longhorn.io
+    version: 1.8.1
+
