@@ -193,6 +193,14 @@ media-server:
         ports:
             http:
               port: 8096
+    jellyfin-local:
+        enabled: true
+        nameOverride: jellyfin-local
+        controller: jellyfin
+        type: NodePort
+        ports:
+            http:
+              port: 8096
     prowlarr:
       enabled: true
       nameOverride: prowlarr
@@ -221,13 +229,6 @@ media-server:
       nameOverride: jellyfin
       hosts:
         - host: watch.oluwatobia.de
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: http
-        - host: dlabs-control-plane
           paths:
             - path: /
               pathType: Prefix
