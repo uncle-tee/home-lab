@@ -23,14 +23,14 @@ spec:
             namespace: media-server-apps
           - name: metallb
             namespace: apps-system
-          - name: minio
-            namespace: minio-apps
+#          - name: minio
+#            namespace: minio-apps
           - name: metrics-server
             namespace: observability-system
           - name: linkwarden
             namespace: linkwarden-apps
-          - name: longhorn
-            namespace: longhorn-system
+#          - name: longhorn
+#            namespace: longhorn-system
           - name: traefik
             namespace: traefik-system
 
