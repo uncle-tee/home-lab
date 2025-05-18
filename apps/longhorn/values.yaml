@@ -1,8 +1,11 @@
 longhorn:
+  preUpgradeChecker:
+    jobEnabled: false #https://github.com/longhorn/longhorn/issues/4853#issuecomment-2146991156
   longhornUI:
     replicas: 1
   persistence:
     defaultClass: false
+    reclaimPolicy: Retain
     defaultDiskSelector:
       enable: true
       selector: "longhorn.io/san-disk-1tb"  # The disk in the node has already been labeled and annotated with this tag
