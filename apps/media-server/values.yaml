@@ -201,7 +201,7 @@ media-server:
         ports:
             http:
               port: 8096
-              nodePort: 31548
+              nodePort: 30000
     prowlarr:
       enabled: true
       nameOverride: prowlarr
