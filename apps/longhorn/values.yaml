@@ -8,7 +8,7 @@ longhorn:
     reclaimPolicy: Retain
     defaultDiskSelector:
       enable: true
-      selector: "longhorn.io/san-disk-1tb"  # The disk in the node has already been labeled and annotated with this tag
+      selector: "san-disk-1tb"  # The disk in the node has already been labeled and annotated with this tag
   defaultSettings:
     defaultDataPath: "/mnt/local-volume/longhorn-data"
     createDefaultDiskLabeledNodes: "true"
