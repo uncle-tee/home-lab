@@ -13,7 +13,7 @@ longhorn:
   defaultSettings:
     defaultDataPath: "/mnt/local-volume/longhorn-data"
     createDefaultDiskLabeledNodes: "true"
-    defaultReplicaCount: 2
+    defaultReplicaCount: 1 #Since we are running a Single node Cluster
     removeSnapshotsDuringFilesystemTrim: enabled
     storageMinimalAvailablePercentage: 30
     autoCleanupRecurringJobBackupSnapshot: "true"
