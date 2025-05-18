@@ -88,3 +88,4 @@ fabric.properties
 /kube-config
 /traeffic-conf/dynamic-routing.yaml
 /kube-config
+!/apps/longhorn/charts/
