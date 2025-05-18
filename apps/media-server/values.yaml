@@ -227,6 +227,13 @@ media-server:
               service:
                 identifier: jellyfin
                 port: http
+        - host: dlabs-control-plane
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: jellyfin
+                port: http
     jellyseer:
       enabled: true
       nameOverride: jellyseer
@@ -238,18 +245,6 @@ media-server:
               service:
                 identifier: jellyseer
                 port: jellyseer
-
-  route:
-    jellyfin:
-      rules:
-        - matches:
-            - path:
-                type: PathPrefix
-                value: /watch
-          backendRefs:
-            - kind: Service
-              port: 7000
-              name: jellyfin
 
   persistence:
     gluetun-tunnel-device:
