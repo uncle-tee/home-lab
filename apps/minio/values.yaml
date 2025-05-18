@@ -2,7 +2,7 @@ homelab-tenant:
   tenant:
     name: homelab
     pools:
-      - servers: 2
+      - servers: 1
         name: "pool-0"
         volumesPerServer: 4
         storageClassName: longhorn-storage-class
