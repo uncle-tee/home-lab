@@ -186,6 +186,15 @@ media-server:
       ports:
         radarr:
           port: 7878
+    radarr-local:
+      enabled: true
+      nameOverride: radarr-local
+      controller: radarr
+      type: NodePort
+      ports:
+        radarr:
+          port: 7878
+          nodePort: 30001
     jellyfin:
         enabled: true
         nameOverride: jellyfin
