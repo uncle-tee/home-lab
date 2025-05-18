@@ -227,6 +227,12 @@ media-server:
               service:
                 identifier: jellyfin
                 port: http
+        - paths:
+          - path: /watch
+            pathType: Prefix
+            service:
+              identifier: jellyfin
+              port: http
     jellyseer:
       enabled: true
       nameOverride: jellyseer
