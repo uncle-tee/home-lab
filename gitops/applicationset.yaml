@@ -23,8 +23,8 @@ spec:
             namespace: media-server-apps
           - name: metallb
             namespace: apps-system
-          - name: minio
-            namespace: minio-apps
+#          - name: minio
+#            namespace: minio-apps
           - name: metrics-server
             namespace: observability-system
           - name: linkwarden
