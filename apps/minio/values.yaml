@@ -10,8 +10,8 @@ homelab-tenant:
         volumesPerServer: 4
         storageClassName: longhorn-storage-class
         size: 10Gi
-    users:
-      - name: admin-user-console
+#    users:
+#      - name: admin-user-console
     configSecret:
       name: root-user-login
       accessKey: ~
