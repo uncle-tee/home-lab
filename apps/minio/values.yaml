@@ -1,8 +1,8 @@
 homelab-tenant:
   secrets: ~
   tenant:
-    configuration:
-      name: root-user-login
+#    configuration:
+#      name: root-user-login
     name: homelab
     pools:
       - servers: 1
@@ -12,8 +12,8 @@ homelab-tenant:
         size: 10Gi
 #    users:
 #      - name: admin-user-console
-    configSecret:
-      name: root-user-login
-      accessKey: ~
-      secretKey: ~
-      existingSecret: true
+#    configSecret:
+#      name: root-user-login
+#      accessKey: ~
+#      secretKey: ~
+#      existingSecret: true
