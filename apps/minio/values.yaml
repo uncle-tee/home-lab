@@ -1,5 +1,7 @@
 homelab-tenant:
   tenant:
+    configuration:
+      name: root-user-login
     name: homelab
     pools:
       - servers: 1
@@ -11,4 +13,6 @@ homelab-tenant:
       - name: admin-user-console
     configSecret:
       name: root-user-login
+      accessKey: ~
+      secretKey: ~
       existingSecret: true
