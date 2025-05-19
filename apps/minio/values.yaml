@@ -1,4 +1,5 @@
 homelab-tenant:
+  secrets: ~
   tenant:
     configuration:
       name: root-user-login
