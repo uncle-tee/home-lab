@@ -1,3 +1,6 @@
+
+
+
 homelab-tenant:
   secrets: ~
   tenant:
@@ -6,10 +9,10 @@ homelab-tenant:
     name: homelab
     pools:
       - servers: 1
-        name: "pool-0"
+        name: "minio-pool-1"
         volumesPerServer: 4
         storageClassName: longhorn-storage-class
-        size: 10Gi
+        size: 5Gi
 #    users:
 #      - name: admin-user-console
 #    configSecret:
