@@ -6,9 +6,6 @@ homelab-tenant:
 #    configuration:
 #      name: root-user-login
     name: homelab
-    exposeServices:
-      minio: true
-      console: true
     pools:
       - servers: 1
         name: "minio-pool-1"
