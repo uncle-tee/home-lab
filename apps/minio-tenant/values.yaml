@@ -1,6 +1,8 @@
 homelab-tenant:
   secrets: ~
   tenant:
+    certificate:
+      requestAutoCert: false
 #    configuration:
 #      name: root-user-login
     name: homelab
