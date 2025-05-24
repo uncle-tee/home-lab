@@ -6,22 +6,11 @@ immich:
         size: 5Gi
         storageClass: longhorn-storage-class
   env:
-    DB_DATABASE_NAME: immich
-    DB_HOSTNAME:
-        valueFrom:
-            secretKeyRef:
-              name: database
-              key: hostname
-    DB_USERNAME:
-        valueFrom:
-            secretKeyRef:
-              name: database
-              key: username
-    DB_PASSWORD:
-        valueFrom:
-            secretKeyRef:
-              name: database
-              key: password
+    DB_URL:
+      valueFrom:
+        secretKeyRef:
+          name: database
+          key: databaseUrl
   immich:
     persistence:
       library:
@@ -59,3 +48,9 @@ database:
             - CREATE EXTENSION earthdistance
             - CREATE EXTENSION vectors
 
+
+postgres://linkwarden-admin:vl2axIvRXunB5HJ5j@linkwarden-db-rw:
+  linkwarden-apps:
+    svc:
+      cluster:
+        local:5432/linkwarden:
