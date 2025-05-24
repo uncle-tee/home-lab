@@ -38,7 +38,7 @@ database:
       storageClass: longhorn-storage-class
     imageCatalogRef:
       kind: ImageCatalog
-      name: cloud-native-vector-image
+      name: database
       major: 15
     enableSuperuserAccess: false
     postgresql:
