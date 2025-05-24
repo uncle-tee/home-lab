@@ -24,6 +24,8 @@ immich:
 
 database:
   fullnameOverride: database
+  version:
+    postgresql: 15
   imageCatalog:
     create: true
     images:
