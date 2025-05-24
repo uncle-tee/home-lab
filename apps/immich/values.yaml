@@ -37,6 +37,8 @@ database:
     fullnameOverride: database
     cluster:
         instances: 1
+        services:
+          disabledDefaultServices: ["ro", "r"]
         storage:
           size: 10Gi
           storageClass: longhorn-storage-class
