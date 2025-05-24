@@ -51,7 +51,7 @@ database:
             - "vectors.so" #We need the pg vector extension for vector search and we are using this Reference https://github.com/tensorchord/cloudnative-pgvecto.rs/tree/main
         initdb:
           database: immich
-          owner: admin
+          owner: homelabs
           secret:
               name: database
           postInitSQL:
