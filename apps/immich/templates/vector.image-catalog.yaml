@@ -5,5 +5,5 @@ metadata:
   namespace: immich-apps
 spec:
   images:
-    - major: 16
-      image: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.9
+    - major: 15
+      image: ghcr.io/tensorchord/cloudnative-pgvecto.rs:15.9-v0.3.0
