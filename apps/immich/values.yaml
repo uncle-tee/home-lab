@@ -35,7 +35,7 @@ database:
         instances: 1
         storage:
           size: 10Gi
-          storageClass: longhorn-db-storage-class
+          storageClass: longhorn-storage-class
         imageCatalogRef:
           major: 15
         enableSuperuserAccess: false
