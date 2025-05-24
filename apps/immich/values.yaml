@@ -6,7 +6,7 @@ immich:
         size: 5Gi
         storageClass: longhorn-storage-class
   env:
-    DB_VECTOR_EXTENSION: pgvector
+    DB_VECTOR_EXTENSION: pgvecto.rs
     DB_URL:
       valueFrom:
         secretKeyRef:
