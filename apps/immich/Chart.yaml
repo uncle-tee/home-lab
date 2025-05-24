@@ -1,0 +1,14 @@
+apiVersion: v2
+name: immich
+description:  Self-hosted photo and video management solution
+version: 0.1.0
+dependencies:
+  - name: immich
+    alias: immich
+    version: 0.9.3
+    repository: https://immich-app.github.io/immich-charts
+  - name: cluster
+    alias: database
+    version: 0.3.0
+    repository: https://cloudnative-pg.github.io/charts
+

@@ -1,0 +1,13 @@
+## Create a persistence claim for the storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-persistent-volume-claim
+  namespace: immich-apps
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+      requests:
+        storage: 200Gi
+    storageClassName: longhorn-storage-class

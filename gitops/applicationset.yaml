@@ -19,6 +19,8 @@ spec:
             namespace: apps-system
           - name: grafana-prometheus
             namespace: observability-system
+          - name: immich
+            namespace: immich-apps
           - name: media-server
             namespace: media-server-apps
           - name: metallb

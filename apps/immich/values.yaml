@@ -1,0 +1,51 @@
+immich:
+  redis:
+    enabled: true
+  env:
+    DB_DATABASE_NAME: immich
+    DB_HOSTNAME:
+        valueFrom:
+            secretKeyRef:
+              name: database
+              key: hostname
+    DB_USERNAME:
+        valueFrom:
+            secretKeyRef:
+              name: database
+              key: username
+    DB_PASSWORD:
+        valueFrom:
+            secretKeyRef:
+              name: database
+              key: password
+  immich:
+    persistence:
+      library:
+        existingClaim: immich-persistent-volume-claim
+  postgresql:
+    global:
+      postgresql:
+        auth:
+          existingSecret: database
+
+
+database:
+    fullnameOverride: database
+    cluster:
+        instances: 1
+        storage:
+          size: 10Gi
+          storageClass: longhorn-db-storage-class
+        imageCatalogRef:
+          major: 15
+        enableSuperuserAccess: false
+        initdb:
+          database: immich
+          owner: admin
+          secret:
+              name: database
+          postInitSQL:
+            - CREATE EXTENSION cube
+            - CREATE EXTENSION earthdistance
+            - CREATE EXTENSION vectors
+
