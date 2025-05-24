@@ -25,8 +25,8 @@ spec:
             namespace: apps-system
           - name: minio-operator
             namespace: minio-apps
-          - name: minio-tenant
-            namespace: homelab-object-storage
+#          - name: minio-tenant #Not working since the Console is not working, paused for now.
+#            namespace: homelab-object-storage
           - name: metrics-server
             namespace: observability-system
           - name: linkwarden
