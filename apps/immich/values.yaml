@@ -42,7 +42,6 @@ database:
       kind: ImageCatalog
       name: database
       major: 15
-    enableSuperuserAccess: false
     postgresql:
       shared_preload_libraries:
         - "vectors.so" #We need the pg vector extension for vector search and we are using this Reference https://github.com/tensorchord/cloudnative-pgvecto.rs/tree/main
@@ -54,5 +53,5 @@ database:
       postInitSQL:
         - CREATE EXTENSION cube
         - CREATE EXTENSION earthdistance
-        - CREATE EXTENSION vectors
+        - CREATE EXTENSION IF NOT EXISTS vectors
 
