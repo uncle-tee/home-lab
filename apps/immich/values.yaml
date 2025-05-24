@@ -37,8 +37,12 @@ database:
           size: 10Gi
           storageClass: longhorn-storage-class
         imageCatalogRef:
-          major: 15
+          kind: ImageCatalog
+          name: cloud-native-vector-image
         enableSuperuserAccess: false
+        postgresql:
+          shared_preload_libraries:
+            - "vectors.so" #Its
         initdb:
           database: immich
           owner: admin

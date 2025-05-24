@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ImageCatalog
+metadata:
+  name: cloud-native-vector-image
+  namespace: immich-apps
+spec:
+  images:
+    - major: 16
+      image: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.9
