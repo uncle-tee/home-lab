@@ -23,35 +23,34 @@ immich:
 
 
 database:
-    fullnameOverride: database
-    cluster:
-        instances: 1
-        services:
-          disabledDefaultServices: ["ro", "r"]
-        storage:
-          size: 10Gi
-          storageClass: longhorn-storage-class
-        imageCatalogRef:
-          kind: ImageCatalog
-          name: cloud-native-vector-image
-          major: 15
-        enableSuperuserAccess: false
-        postgresql:
-          shared_preload_libraries:
-            - "vectors.so" #We need the pg vector extension for vector search and we are using this Reference https://github.com/tensorchord/cloudnative-pgvecto.rs/tree/main
-        initdb:
-          database: immich
-          owner: homelabs
-          secret:
-              name: database
-          postInitSQL:
-            - CREATE EXTENSION cube
-            - CREATE EXTENSION earthdistance
-            - CREATE EXTENSION vectors
+  fullnameOverride: database
+  imageCatalog:
+    create: true
+    images:
+      - major: 15
+        image: ghcr.io/tensorchord/cloudnative-pgvecto.rs:15.9-v0.3.0
+  cluster:
+    instances: 1
+    services:
+      disabledDefaultServices: [ "ro", "r" ]
+    storage:
+      size: 10Gi
+      storageClass: longhorn-storage-class
+    imageCatalogRef:
+      kind: ImageCatalog
+      name: cloud-native-vector-image
+      major: 15
+    enableSuperuserAccess: false
+    postgresql:
+      shared_preload_libraries:
+        - "vectors.so" #We need the pg vector extension for vector search and we are using this Reference https://github.com/tensorchord/cloudnative-pgvecto.rs/tree/main
+    initdb:
+      database: immich
+      owner: homelabs
+      secret:
+        name: database
+      postInitSQL:
+        - CREATE EXTENSION cube
+        - CREATE EXTENSION earthdistance
+        - CREATE EXTENSION vectors
 
-
-postgres://linkwarden-admin:vl2axIvRXunB5HJ5j@linkwarden-db-rw:
-  linkwarden-apps:
-    svc:
-      cluster:
-        local:5432/linkwarden:
