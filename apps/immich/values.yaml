@@ -34,6 +34,7 @@ database:
         imageCatalogRef:
           kind: ImageCatalog
           name: cloud-native-vector-image
+          major: "15"
         enableSuperuserAccess: false
         postgresql:
           shared_preload_libraries:
