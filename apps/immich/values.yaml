@@ -4,7 +4,7 @@ immich:
       main:
         enabled: true
         annotations:
-            kubernetes.io/ingress.class: traefik
+#            kubernetes.io/ingress.class: traefik
             #  traefik.ingress.kubernetes.io/router.middlewares: unlimited-body@kubernetescrd # we need to find a means to increase the body size for uploads for now this is not working
         hosts:
           - host: photos.oluwatobia.de
