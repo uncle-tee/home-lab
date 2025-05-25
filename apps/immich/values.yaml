@@ -8,6 +8,9 @@ immich:
             #  traefik.ingress.kubernetes.io/router.middlewares: unlimited-body@kubernetescrd # we need to find a means to increase the body size for uploads for now this is not working
         hosts:
           - host: media.oluwatobia.de
+            paths:
+              - path: /
+                pathType: Prefix
   redis:
     enabled: true
     master:
