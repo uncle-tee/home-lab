@@ -238,7 +238,7 @@ media-server:
       enabled: true
       nameOverride: jellyfin
       hosts:
-        - host: watch.oluwatobia.de
+        - host: movies.oluwatobia.de
           paths:
             - path: /
               pathType: Prefix
@@ -249,7 +249,7 @@ media-server:
       enabled: true
       nameOverride: jellyseer
       hosts:
-        - host: media.oluwatobia.de
+        - host: movie-request.oluwatobia.de
           paths:
             - path: /
               pathType: Prefix

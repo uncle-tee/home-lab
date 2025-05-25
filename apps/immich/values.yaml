@@ -1,4 +1,13 @@
 immich:
+  server:
+    ingress:
+      main:
+        enabled: true
+        annotations:
+            kubernetes.io/ingress.class: traefik
+            #  traefik.ingress.kubernetes.io/router.middlewares: unlimited-body@kubernetescrd # we need to find a means to increase the body size for uploads for now this is not working
+        hosts:
+          - host: media.oluwatobia.de
   redis:
     enabled: true
     master:
@@ -51,7 +60,7 @@ database:
       owner: homelabs
       secret:
         name: database
-      postInitApplicationSQL:
+      postInitApplicationSQL: #Queries are to be run on the DB and not on the cluster
         - CREATE EXTENSION IF NOT EXISTS vectors;
         - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
         - ALTER SCHEMA vectors OWNER TO homelabs;
