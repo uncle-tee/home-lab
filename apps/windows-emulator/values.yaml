@@ -11,14 +11,31 @@ emulator:
       containers:
         main:
           image:
-            repository: us-docker.pkg.dev/android-emulator-268719/images/30-google-x64
-            tag: 30.1.2
+            repository: dockurr/windows
+            tag: latest
             pullPolicy: IfNotPresent
           securityContext:
             privileged: true
             capabilities:
               add:
+                - NET_ADMIN
                 - SYS_ADMIN
+          env:
+            - name: VERSION
+              value: "win11"
+            - name: RAM_SIZE
+              value: "1G"
+            - name: CPU_CORES
+              value: "2"
+            - name: DISK_SIZE
+              value: "10G"
+          resources:
+            requests:
+              cpu: 1
+              memory: 1Gi
+            limits:
+              cpu: 2
+              memory: 1Gi
 
   persistence:
     kvm-device:
@@ -29,22 +46,31 @@ emulator:
         main:
           main:
             - path: /dev/kvm
+    storage:
+      enabled: true
+      type: persistentVolumeClaim
+      existingClaim: windows-emulator-pvc
+      advancedMounts:
+        main:
+          main:
+            - path: /storage
+
   service:
     main:
       controller: main
       ports:
         http:
-          port: 8554
-          targetPort: 8554
-        adb:
-          port: 5555
-          targetPort: 5555
+          port: 8006
+          targetPort: 8006
+        rdp:
+          port: 3389
+          targetPort: 3389
 
   ingress:
     main:
       enabled: true
       hosts:
-        - host: android.oluwatobia.de
+        - host: windows.oluwatobia.de
           paths:
             - path: /
               pathType: Prefix

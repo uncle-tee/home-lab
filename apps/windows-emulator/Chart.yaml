@@ -1,6 +1,6 @@
 apiVersion: v2
-name: android-emulator
-description: Android Emulator running in a container
+name: windows-emulator
+description: Windows emulator running in a container using dockurr/windows
 version: 0.1.0
 dependencies:
   - name: app-template
