@@ -4,10 +4,7 @@ emulator:
       replicas: 1
       strategy: Recreate
       pod:
-        securityContext:
-          runAsUser: 0
-          fsGroup: 0
-          fsGroupChangePolicy: OnRootMismatch
+        terminationGracePeriodSeconds: 120
       containers:
         main:
           image:
@@ -19,30 +16,17 @@ emulator:
             capabilities:
               add:
                 - NET_ADMIN
-                - SYS_ADMIN
           env:
             - name: VERSION
-              value: "win11"
-            - name: RAM_SIZE
-              value: "1G"
-            - name: CPU_CORES
-              value: "2"
+              value: "11"
             - name: DISK_SIZE
-              value: "31G"
-          resources:
-            requests:
-              cpu: 1
-              memory: 1Gi
-            limits:
-              cpu: 2
-              memory: 1Gi
+              value: "64G"
 
   persistence:
-    kvm-device:
+    dev-kvm:
       enabled: true
       type: hostPath
       hostPath: /dev/kvm
-      hostPathType: CharDevice
       advancedMounts:
         main:
           main:
@@ -51,7 +35,7 @@ emulator:
       enabled: true
       type: hostPath
       hostPath: /dev/net/tun
-      hostPathType: "CharDevice"
+      hostPathType: CharDevice
       advancedMounts:
         main:
           main:
@@ -72,9 +56,19 @@ emulator:
         http:
           port: 8006
           targetPort: 8006
+          protocol: TCP
         rdp:
           port: 3389
           targetPort: 3389
+          protocol: TCP
+        rdp-udp:
+          port: 3389
+          targetPort: 3389
+          protocol: UDP
+        vnc:
+          port: 5900
+          targetPort: 5900
+          protocol: TCP
 
   ingress:
     main:
