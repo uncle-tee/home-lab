@@ -37,8 +37,8 @@ spec:
             namespace: longhorn-system
           - name: traefik
             namespace: traefik-system
-#          - name: windows-emulator
-#            namespace: windows-emulator
+          - name: windows-emulator
+            namespace: windows-emulator
 
   template:
     metadata:
