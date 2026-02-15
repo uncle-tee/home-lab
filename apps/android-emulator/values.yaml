@@ -1,0 +1,58 @@
+emulator:
+  controllers:
+    main:
+      replicas: 1
+      strategy: Recreate
+      pod:
+        securityContext:
+          runAsUser: 0
+          fsGroup: 0
+          fsGroupChangePolicy: OnRootMismatch
+      containers:
+        main:
+          image:
+            repository: budtmo/docker-android
+            tag: emulator_14.0
+            pullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+          env:
+            - name: EMULATOR_DEVICE
+              value: "Samsung Galaxy S10"
+            - name: WEB_VNC
+              value: "true"
+
+  persistence:
+    kvm-device:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/kvm
+      advancedMounts:
+        main:
+          main:
+            - path: /dev/kvm
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 6080
+          targetPort: 6080
+        adb:
+          port: 5555
+          targetPort: 5555
+
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: android.oluwatobia.de
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+

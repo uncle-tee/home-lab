@@ -37,6 +37,8 @@ spec:
             namespace: longhorn-system
           - name: traefik
             namespace: traefik-system
+          - name: android
+            namespace: android-emulator
 
   template:
     metadata:
