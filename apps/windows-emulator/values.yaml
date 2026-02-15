@@ -28,7 +28,7 @@ emulator:
             - name: CPU_CORES
               value: "2"
             - name: DISK_SIZE
-              value: "30Gi"
+              value: "30G"
           resources:
             requests:
               cpu: 1
