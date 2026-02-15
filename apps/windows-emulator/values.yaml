@@ -42,10 +42,20 @@ emulator:
       enabled: true
       type: hostPath
       hostPath: /dev/kvm
+      hostPathType: CharDevice
       advancedMounts:
         main:
           main:
             - path: /dev/kvm
+    dev-tun:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: "CharDevice"
+      advancedMounts:
+        main:
+          main:
+            - path: /dev/net/tun
     storage:
       enabled: true
       type: persistentVolumeClaim
