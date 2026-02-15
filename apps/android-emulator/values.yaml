@@ -15,6 +15,7 @@ emulator:
             tag: emulator_14.0
             pullPolicy: IfNotPresent
           securityContext:
+            privileged: true
             capabilities:
               add:
                 - SYS_ADMIN
