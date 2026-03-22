@@ -19,14 +19,14 @@ resume:
             - name: APP_URL
               value: "http://localhost:3000"
             - name: PRINTER_APP_URL
-              value: "http://reactive-resume-printer.resume-apps.svc.cluster.local"
+              value: "http://resume-printer.resume-apps.svc.cluster.local"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: reactive-resume-app
                   key: uri
             - name: PRINTER_ENDPOINT
-              value: "http://reactive-resume-printer.resume-apps.svc.cluster.local"
+              value: "http://resume-printer.resume-apps.svc.cluster.local"
             - name: AUTH_SECRET
               valueFrom:
                 secretKeyRef:
@@ -57,6 +57,7 @@ resume:
                 failureThreshold: 3
     # Printer service (browserless chromium)
     printer:
+      nameOverride: resume-printer
       strategy: Recreate
       containers:
         main:
