@@ -23,14 +23,14 @@ resume:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: reactive-resume
+                  name: reactive-resume-app
                   key: uri
             - name: PRINTER_ENDPOINT
               value: "http://reactive-resume-printer:3000"
             - name: AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: reactive-resume
+                  name: reactive-resume-app
                   key: authSecret
           probes:
             liveness:
@@ -115,6 +115,6 @@ database:
       major: 17
     initdb:
       database: reactive_resume
-      owner: reactive-resume-admin
+      owner: reactive-resume-db-admin
       secret:
-        name: reactive-resume
+        name: reactive-resume-db
