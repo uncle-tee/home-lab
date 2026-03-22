@@ -87,6 +87,9 @@ resume:
           targetPort: 3000
   ingress:
     main:
+      className: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: resume-apps-redirect-to-login@kubernetescrd
       hosts:
         - host: resume.oluwatobia.de
           paths:

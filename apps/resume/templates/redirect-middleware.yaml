@@ -1,0 +1,10 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-login
+spec:
+  redirectRegex:
+    regex: ^https://resume\.oluwatobia\.de/?$
+    replacement: https://resume.oluwatobia.de/auth/login
+    permanent: false
+
