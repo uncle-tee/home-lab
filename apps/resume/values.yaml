@@ -17,7 +17,7 @@ resume:
             pullPolicy: IfNotPresent
           env:
             - name: APP_URL
-              value: "http://localhost:3000"
+              value: "https://resume.oluwatobia.de"
             - name: PRINTER_APP_URL
               value: "http://resume-printer.resume-apps.svc.cluster.local"
             - name: DATABASE_URL
