@@ -4,7 +4,7 @@ metadata:
   name: redirect-to-login
 spec:
   redirectRegex:
-    regex: ^/?$
+    regex: ^/$
     replacement: /auth/login
     permanent: false
 
