@@ -90,6 +90,7 @@ resume:
       className: traefik
       annotations:
         traefik.ingress.kubernetes.io/router.middlewares: resume-apps-redirect-to-login@kubernetescrd
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
       hosts:
         - host: resume.oluwatobia.de
           paths:
