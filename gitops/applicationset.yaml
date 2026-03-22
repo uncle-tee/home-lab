@@ -27,8 +27,6 @@ spec:
             namespace: apps-system
           - name: minio-operator
             namespace: minio-apps
-#          - name: minio-tenant #Not working since the Console is not working, paused for now.
-#            namespace: homelab-object-storage
           - name: metrics-server
             namespace: observability-system
           - name: linkwarden
@@ -37,8 +35,8 @@ spec:
             namespace: longhorn-system
           - name: traefik
             namespace: traefik-system
-          - name: windows-emulator
-            namespace: windows-emulator
+          - name: resume
+            namespace: resume-apps
 
   template:
     metadata:

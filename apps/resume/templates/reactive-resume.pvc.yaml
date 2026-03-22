@@ -1,12 +1,13 @@
+## Create a persistence claim for the storage
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: windows-emulator-pvc
+  name: reactive-resume-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 64Gi
+      storage: 10Gi
   storageClassName: longhorn-storage-class
 

@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - reactive_resume_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  printer:
+    image: ghcr.io/browserless/chromium:latest
+    restart: unless-stopped
+    environment:
+      - QUEUED=10
+      - HEALTH=true
+      - CONCURRENT=5
+      # Optional: Set a token for authentication
+      # - TOKEN=your-secret-token
+    networks:
+      - reactive_resume_network
+
+  reactive_resume:
+    image: amruthpillai/reactive-resume:latest
+    restart: unless-stopped
+    environment:
+      - APP_URL=http://localhost:3000
+      - PRINTER_APP_URL=http://printer:3000
+      - DATABASE_URL=postgresql://postgres:postgres_password@postgres:5432/postgres
+      - PRINTER_ENDPOINT=http://printer:3000
+      - AUTH_SECRET=204361c739c104db86ad492103ce8854ea71db8d92f1d7db0b1bc3a1e7a1bfab
+      # Add other optional env vars as needed (SMTP, S3, OAuth, etc.)
+    volumes:
+      - reactive_resume_data:/app/data
+    networks:
+      - reactive_resume_network
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  reactive_resume_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  reactive_resume_data:

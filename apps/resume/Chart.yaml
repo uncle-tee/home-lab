@@ -1,0 +1,13 @@
+apiVersion: v2
+name: reactive-resume
+description: A free and open-source resume builder
+version: 0.1.0
+dependencies:
+  - name: app-template
+    alias: resume
+    version: 3.7.3
+    repository: 'https://bjw-s-labs.github.io/helm-charts'
+  - name: cluster
+    alias: database
+    version: 0.3.0
+    repository: https://cloudnative-pg.github.io/charts

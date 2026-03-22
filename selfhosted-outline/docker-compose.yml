@@ -1,0 +1,126 @@
+
+services:
+  # === Authentik Database ===
+  authentik-db:
+    image: postgres:16-alpine
+    container_name: authentik_postgres
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+    volumes:
+      - authentik_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${PG_DB} -U ${PG_USER}"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # === Authentik Server ===
+  authentik:
+    image: ${AUTHENTIK_IMAGE}:${AUTHENTIK_TAG}
+    container_name: authentik
+    command: server
+    depends_on:
+      authentik-db:
+        condition: service_healthy
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: authentik-db
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+    ports:
+      - "${COMPOSE_PORT_HTTP}:9000"
+      - "${COMPOSE_PORT_HTTPS}:9443"
+    volumes:
+      - ./authentik-data:/data
+      - ./authentik-templates:/templates
+    restart: unless-stopped
+
+  # === Authentik Worker ===
+  authentik-worker:
+    image: ${AUTHENTIK_IMAGE}:${AUTHENTIK_TAG}
+    container_name: authentik_worker
+    command: worker
+    depends_on:
+      authentik-db:
+        condition: service_healthy
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: authentik-db
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./authentik-data:/data
+      - ./authentik-templates:/templates
+    restart: unless-stopped
+
+  # === Redis for Outline ===
+  redis:
+    image: redis:7
+    container_name: outline_redis
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # === Outline Database ===
+  outline-db:
+    image: postgres:16-alpine
+    container_name: outline_postgres
+    environment:
+      POSTGRES_DB: ${OUTLINE_DB}
+      POSTGRES_USER: ${OUTLINE_DB_USER}
+      POSTGRES_PASSWORD: ${OUTLINE_DB_PASS}
+    volumes:
+      - outline_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${OUTLINE_DB} -U ${OUTLINE_DB_USER}"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # === Outline Wiki ===
+  outline:
+    image: outlinewiki/outline:latest
+    container_name: outline
+    depends_on:
+      outline-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      authentik:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://${OUTLINE_DB_USER}:${OUTLINE_DB_PASS}@outline-db:5432/${OUTLINE_DB}
+      PGSSLMODE: disable
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      URL: http://${OUTLINE_HOST}:${OUTLINE_PORT}
+      SECRET_KEY: ${OUTLINE_SECRET_KEY}
+      UTILS_SECRET: ${OUTLINE_UTILS_SECRET}
+      NODE_ENV: production
+      FORCE_HTTPS: "false"
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_AUTH_URI: ${OIDC_AUTH_URI}
+      OIDC_TOKEN_URI: ${OIDC_TOKEN_URI}
+      OIDC_USERINFO_URI: ${OIDC_USERINFO_URI}
+      OIDC_LOGOUT_URI: ${OIDC_LOGOUT_URI}
+      OIDC_USERNAME_CLAIM: ${OIDC_USERNAME_CLAIM}
+      OIDC_DISPLAY_NAME: Authentik
+      OIDC_SCOPES: openid profile email
+    ports:
+      - "${OUTLINE_PORT}:3000"
+    restart: unless-stopped
+
+volumes:
+  authentik_db_data:
+  outline_db_data:
+  redis_data:
