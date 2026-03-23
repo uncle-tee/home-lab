@@ -63,7 +63,7 @@ resume:
         main:
           image:
             repository: ghcr.io/browserless/chromium
-            tag: latest
+            tag: v2.38.2
             pullPolicy: IfNotPresent
           env:
             - name: QUEUED
