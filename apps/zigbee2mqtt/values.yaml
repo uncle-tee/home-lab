@@ -1,0 +1,36 @@
+zigbee2mqtt:
+  service:
+    type: NodePort
+    port: 8080
+
+  statefulset:
+    storage:
+      enabled: true
+      size: 5Gi
+      storageClassName: longhorn-storage-class
+
+    volumes:
+      - name: sonoff-zigbee-adapter
+        hostPath:
+          path: /dev/ttyUSB0
+          type: CharDevice
+
+    volumeMounts:
+      - name: sonoff-zigbee-adapter
+        mountPath: /dev/ttyUSB0
+
+  timezone: Europe/Berlin
+
+  zigbee2mqtt:
+    mqtt:
+      server: mqtt://mosquitto:1883
+
+    serial:
+      port: /dev/ttyUSB0
+      adapter: ember
+      baudrate: 115200
+      rtscts: false
+
+    frontend:
+      enabled: true
+      port: 8080

@@ -1,0 +1,16 @@
+mosquitto:
+  service:
+    type: ClusterIP
+    ports:
+      mqtt:
+        enabled: true
+        port: 1883
+        targetPort: 1883
+  persistence:
+    enabled: true
+    storageClass: longhorn-storage-class
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+  config:
+    allowAnonymous: true

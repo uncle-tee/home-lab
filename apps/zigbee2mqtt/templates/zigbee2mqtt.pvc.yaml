@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zigbee2mqtt-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn-storage-class
+  resources:
+    requests:
+      storage: 5Gi

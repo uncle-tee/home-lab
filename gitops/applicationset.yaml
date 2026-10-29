@@ -23,6 +23,8 @@ spec:
             namespace: immich-apps
           - name: media-server
             namespace: media-server-apps
+          - name: mosquitto
+            namespace: smart-home-apps
           - name: metallb
             namespace: apps-system
           - name: minio-operator
@@ -37,6 +39,8 @@ spec:
             namespace: traefik-system
           - name: resume
             namespace: resume-apps
+          - name: zigbee2mqtt
+            namespace: smart-home-apps
 
   template:
     metadata:

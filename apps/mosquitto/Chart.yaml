@@ -1,0 +1,8 @@
+apiVersion: v2
+name: mosquitto
+description: Eclipse Mosquitto MQTT broker
+version: 0.1.0
+dependencies:
+  - name: mosquitto
+    version: 0.6.1
+    repository: https://bdclark.github.io/helm-charts

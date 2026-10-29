@@ -89,3 +89,6 @@ fabric.properties
 /traeffic-conf/dynamic-routing.yaml
 /kube-config
 !/apps/longhorn/charts/
+!/apps/zigbee2mqtt/charts/
+/apps/mosquitto/charts/
+!/apps/zigbee2mqtt/charts/

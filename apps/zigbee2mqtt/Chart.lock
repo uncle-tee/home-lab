@@ -1,0 +1,6 @@
+dependencies:
+- name: zigbee2mqtt
+  repository: https://charts.zigbee2mqtt.io
+  version: 2.14.2
+digest: sha256:7b6a4f960d2c787fa0b7265e66494c1452e4f671d8816add64ab4987cf3717a0
+generated: "2026-10-29T00:09:22.49378+01:00"
