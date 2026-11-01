@@ -1,0 +1,9 @@
+dependencies:
+- name: immich
+  repository: oci://ghcr.io/immich-app/immich-charts
+  version: 0.13.4
+- name: cluster
+  repository: https://cloudnative-pg.github.io/charts
+  version: 0.3.0
+digest: sha256:0bc46acda22b83729edb64288c4f7b8187a7f9fbdd7c11f5d9d93177a3e1753c
+generated: "2026-11-02T00:19:24.582521+01:00"
