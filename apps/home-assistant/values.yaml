@@ -1,0 +1,14 @@
+home-assistant:
+  env:
+    - name: TZ
+      value: Europe/Berlin
+
+  service:
+    type: ClusterIP
+    port: 8123
+
+  persistence:
+    enabled: true
+    storageClass: longhorn-storage-class
+    accessMode: ReadWriteOnce
+    size: 10Gi

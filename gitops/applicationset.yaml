@@ -25,6 +25,8 @@ spec:
             namespace: media-server-apps
           - name: mosquitto
             namespace: smart-home-apps
+          - name: home-assistant
+            namespace: smart-home-apps
           - name: metallb
             namespace: apps-system
           - name: minio-operator
