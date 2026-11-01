@@ -6,7 +6,7 @@ dependencies:
   - name: immich
     alias: immich
     version: 0.13.4
-    repository: https://immich-app.github.io/immich-charts
+    repository: oci://ghcr.io/immich-app/immich-charts
   - name: cluster
     alias: database
     version: 0.3.0
